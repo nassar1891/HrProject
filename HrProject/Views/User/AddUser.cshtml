@@ -1,0 +1,75 @@
+﻿@model HrProject.ViewModels.UserViewModel
+
+@{
+    ViewData["Title"] = "AddUser";
+    SelectList groupList = new SelectList(ViewBag.groupRoles);
+}
+<div class="card">
+    <div class="card-header">
+        <div class="card-title-wrap bar-success">
+            <h4 class="card-title">Add New User</h4>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="px-3">
+            <form asp-action="AddUser" class="form form-horizontal">
+                <div class="form-body">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group row">
+                        <label class="col-md-3 label-control">Full Name: </label>
+                        <div class="col-md-9">
+                            <input asp-for="Name" class="form-control"/>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mt-2">
+                        <label class="col-md-3 label-control">User Name: </label>
+                        <div class="col-md-9">
+                            <input asp-for="UserName" class="form-control" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mt-2">
+                        <label class="col-md-3 label-control">Email Address: </label>
+                        <div class="col-md-9">
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mt-2">
+                        <label class="col-md-3 label-control">Password: </label>
+                        <div class="col-md-9">
+                            <input asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mt-2">
+                        <label class="col-md-3 label-control">Group Name: </label>
+                        <div class="col-md-9">
+                            <select asp-for="GroupName" class="form-control" asp-items="groupList">
+                                <option value="">Select Group Name...</option>
+                            </select>
+                            <span asp-validation-for="GroupName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-actions float-end mt-2">
+                        <a class="btn btn-outline-danger" asp-action="Index"> <i class="bi bi-x-circle"></i> Cancel</a>
+                        <button type="submit" value="Save" class="btn btn-primary">Save</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

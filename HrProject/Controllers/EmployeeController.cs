@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using HrProject.Global;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HrProject.Controllers
@@ -18,6 +20,7 @@ namespace HrProject.Controllers
         }
 
         // GET: EmployeeController/Create
+        //[Authorize(Permissions.Employee.Add)]
         public ActionResult Create()
         {
             return View();

@@ -1,5 +1,9 @@
 using HrProject.Data.DataInitilaizer;
+using HrProject.Filter;
 using HrProject.Models;
+using HrProject.Repositories.GroupRepo;
+using HrProject.Repositories.UserRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,6 +28,19 @@ namespace HrProject
 					option.Password.RequiredLength = 5;
 				}).AddEntityFrameworkStores<HrContext>();
 
+			// Authorization Services
+			builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+			builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+			builder.Services.Configure<SecurityStampValidatorOptions>(options =>
+			{
+				options.ValidationInterval = TimeSpan.Zero;
+			});
+
+
+
+			builder.Services.AddScoped<IGroupRepository, GroupRepositroy>();
+			builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 			var app = builder.Build();
 
 			// Configure the HTTP request pipeline.
@@ -36,7 +53,7 @@ namespace HrProject
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
-
+			app.UseAuthentication();
 			app.UseRouting();
 
 			app.UseAuthorization();
