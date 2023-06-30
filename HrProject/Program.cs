@@ -1,36 +1,70 @@
+using HrProject.Data.DataInitilaizer;
+using HrProject.Filter;
+using HrProject.Models;
+using HrProject.Repositories.GroupRepo;
+using HrProject.Repositories.UserRepository;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 namespace HrProject
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
+	public class Program
+	{
+		public static void Main(string[] args)
+		{
+			
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
+			var builder = WebApplication.CreateBuilder(args);
+			// Add services to the container.
+			builder.Services.AddControllersWithViews();
+			builder.Services.AddDbContext<HrContext>(
+				option => option.UseSqlServer(builder.Configuration.GetConnectionString("hrConnection")));
 
-            var app = builder.Build();
+			builder.Services.AddIdentity<HrUser, IdentityRole>(
+				option =>
+				{
+					option.Password.RequireNonAlphanumeric = false;
+					option.Password.RequiredLength = 5;
+				}).AddEntityFrameworkStores<HrContext>();
 
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+			// Authorization Services
+			builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+			builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+			builder.Services.Configure<SecurityStampValidatorOptions>(options =>
+			{
+				options.ValidationInterval = TimeSpan.Zero;
+			});
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
 
-            app.UseRouting();
 
-            app.UseAuthorization();
+			builder.Services.AddScoped<IGroupRepository, GroupRepositroy>();
+			builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+			var app = builder.Build();
 
-            app.Run();
-        }
-    }
+			// Configure the HTTP request pipeline.
+			if (!app.Environment.IsDevelopment())
+			{
+				app.UseExceptionHandler("/Home/Error");
+				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+				app.UseHsts();
+			}
+
+			app.UseHttpsRedirection();
+			app.UseStaticFiles();
+			app.UseAuthentication();
+			app.UseRouting();
+
+			app.UseAuthorization();
+
+			app.MapControllerRoute(
+				name: "default",
+				pattern: "{controller=Home}/{action=Index}/{id?}");
+
+			DataInitilizer.Configure(app);
+
+			app.Run();
+		}
+	}
 }

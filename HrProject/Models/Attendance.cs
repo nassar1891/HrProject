@@ -1,9 +1,14 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HrProject.Models;
 
-public partial class Attendance
+
+
+[PrimaryKey(nameof(Date),nameof(Emp_Id))]
+public class Attendance
 {
     public DateTime Date { get; set; }
 
@@ -11,7 +16,8 @@ public partial class Attendance
 
     public TimeSpan DepartureTime { get; set; }
 
-    public int Employeeid { get; set; }
+    [ForeignKey("Employee")]
+    public int? Emp_Id { get; set; }
 
-    public virtual Employee Employee { get; set; } = null!;
+    public virtual Employee? Employee { get; set; } = null!;
 }

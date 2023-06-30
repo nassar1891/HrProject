@@ -1,0 +1,100 @@
+﻿@model HrProject.ViewModels.PermissionFormViewModel
+
+@{
+	ViewData["Title"] = "Edit";
+}
+
+<h1>Edit Group</h1>
+
+<hr />
+<div class="row">
+	<div class="col-md-8 offset-2">
+		<form asp-action="Edit">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+			<div class="form-group">
+				<label>Group Name</label>
+				<input asp-for="RoleName" class="form-control" />
+				<input type="hidden" asp-for="RoleId"/>
+				<span asp-validation-for="RoleName" class="text-danger"></span>
+			</div>
+
+			<table class="table table-striped mt-3">
+				<thead>
+					<tr>
+						<th>Module Name</th>
+						<th>Add</th>
+						<th>View</th>
+						<th>Edit</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Employee</td>
+						@for (int i = 0; i < 4; i++)
+						{
+							<input type="hidden" asp-for="@Model.RoleClaims[i].DisplayValue" />
+							<td>
+								<input type="checkbox" asp-for="@Model.RoleClaims[i].IsSeleced" class="form-check-input" />
+							</td>
+						}
+					</tr>
+					<tr>
+						<td>General Setting</td>
+						@for (int i = 4; i < 8; i++)
+						{
+							<input type="hidden" asp-for="@Model.RoleClaims[i].DisplayValue" />
+							<td>
+								<input type="checkbox" asp-for="@Model.RoleClaims[i].IsSeleced" class="form-check-input" />
+							</td>
+						}
+					</tr>
+					<tr>
+						<td>Department</td>
+						@for (int i = 8; i < 12; i++)
+						{
+							<input type="hidden" asp-for="@Model.RoleClaims[i].DisplayValue" />
+							<td>
+								<input type="checkbox" asp-for="@Model.RoleClaims[i].IsSeleced" class="form-check-input" />
+							</td>
+						}
+					</tr>
+					<tr>
+						<td>Salary</td>
+						@for (int i = 12; i < 16; i++)
+						{
+							<input type="hidden" asp-for="@Model.RoleClaims[i].DisplayValue" />
+							<td>
+								<input type="checkbox" asp-for="@Model.RoleClaims[i].IsSeleced" class="form-check-input" />
+							</td>
+						}
+					</tr>
+					<tr>
+						<td>Attendance</td>
+						@for (int i = 16; i < 20; i++)
+						{
+							<input type="hidden" asp-for="@Model.RoleClaims[i].DisplayValue" />
+							<td>
+								<input type="checkbox" asp-for="@Model.RoleClaims[i].IsSeleced" class="form-check-input" />
+							</td>
+						}
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="form-group">
+				<input type="submit" value="Update" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}
+
+
