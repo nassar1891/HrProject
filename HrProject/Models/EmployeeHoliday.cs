@@ -1,13 +1,16 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HrProject.Models;
 
-public partial class EmployeeHoliday
+[PrimaryKey(nameof(Holiday),nameof(Emp_Id))]
+public class EmployeeHoliday
 {
-    public int Holiday { get; set; }
+    public DateTime Holiday { get; set; }
 
-    public int Employeeid { get; set; }
-
-    public virtual Employee Employee { get; set; } = null!;
+    [ForeignKey("Employee")]
+    public int Emp_Id { get; set; }
+    public virtual Employee? Employee { get; set; }
 }

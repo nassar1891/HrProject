@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HrProject.Models;
 
-public partial class Employee
+public class Employee
 {
     public int Id { get; set; }
 
-    public string FirstName { get; set; } = null!;
+    public string? FirstName { get; set; } = null!;
 
-    public string LastName { get; set; } = null!;
+    public string? LastName { get; set; } = null!;
 
     public string Country { get; set; } = null!;
 
-    public string City { get; set; } = null!;
+    public string? City { get; set; } = null!;
 
     public int Phone { get; set; }
 
@@ -31,13 +32,12 @@ public partial class Employee
 
     public TimeSpan ArrivalTime { get; set; }
 
-    public TimeSpan? DepartureTime { get; set; }
+    public TimeSpan? LeaveTime { get; set; }
 
-    public int Departmentid { get; set; }
+	[ForeignKey("Department")]
+	public int Departmentid { get; set; }
 
-    public virtual ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
-
-    public virtual Department Department { get; set; } = null!;
-
-    public virtual ICollection<EmployeeHoliday> EmployeeHolidays { get; set; } = new List<EmployeeHoliday>();
+    public virtual Department? Department { get; set; }
+    public virtual ICollection<Attendance>? Attendances { get; set; } = new List<Attendance>();
+    public virtual ICollection<EmployeeHoliday>? EmployeeHolidays { get; set; } = new List<EmployeeHoliday>();
 }
