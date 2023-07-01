@@ -25,13 +25,13 @@ namespace HrProject.Controllers
         }
 
         [HttpGet]
-        [Authorize(Permissions.GeneralSetting.View)]
+        [Authorize(Permissions.Employee.View)]
         public async Task<IActionResult> Index()
         {
             var allUsers = await userRepository.GetAllUsers();
             return View(allUsers);
         }
-
+        
         public async Task<IActionResult> AddUser()
         {
             var groupRoles = await groupRepository.GetRolesAsync();
