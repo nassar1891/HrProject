@@ -4,6 +4,7 @@ using HrProject.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrProject.Migrations
 {
     [DbContext(typeof(HrContext))]
-    partial class HrContextModelSnapshot : ModelSnapshot
+    [Migration("20230701155557_v6")]
+    partial class v6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,8 +125,8 @@ namespace HrProject.Migrations
 
             modelBuilder.Entity("HrProject.Models.EmployeeHoliday", b =>
                 {
-                    b.Property<string>("Holiday")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<DateTime>("Holiday")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Genral_Id")
                         .HasColumnType("int");

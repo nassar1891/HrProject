@@ -5,12 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HrProject.Models;
 
-[PrimaryKey(nameof(Holiday),nameof(Emp_Id))]
+[PrimaryKey(nameof(Holiday),nameof(Genral_Id))]
 public class EmployeeHoliday
 {
-    public DateTime Holiday { get; set; }
+    public string Holiday { get; set; }
 
-    [ForeignKey("Employee")]
-    public int Emp_Id { get; set; }
-    public virtual Employee? Employee { get; set; }
+    [ForeignKey("GenrealSetting")]
+    public int Genral_Id { get; set; }
+    public GeneralSetting? GenrealSetting { get; set; }
 }

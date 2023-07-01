@@ -4,6 +4,7 @@ using HrProject.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrProject.Migrations
 {
     [DbContext(typeof(HrContext))]
-    partial class HrContextModelSnapshot : ModelSnapshot
+    [Migration("20230701115418_v4")]
+    partial class v4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,13 +125,18 @@ namespace HrProject.Migrations
 
             modelBuilder.Entity("HrProject.Models.EmployeeHoliday", b =>
                 {
-                    b.Property<string>("Holiday")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<DateTime>("Holiday")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Emp_Id")
+                        .HasColumnType("int");
 
                     b.Property<int>("Genral_Id")
                         .HasColumnType("int");
 
-                    b.HasKey("Holiday", "Genral_Id");
+                    b.HasKey("Holiday", "Emp_Id");
+
+                    b.HasIndex("Emp_Id");
 
                     b.HasIndex("Genral_Id");
 
@@ -376,11 +384,19 @@ namespace HrProject.Migrations
 
             modelBuilder.Entity("HrProject.Models.EmployeeHoliday", b =>
                 {
+                    b.HasOne("HrProject.Models.Employee", "Employee")
+                        .WithMany("EmployeeHolidays")
+                        .HasForeignKey("Emp_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("HrProject.Models.GeneralSetting", "GenrealSetting")
                         .WithMany("DayOff")
                         .HasForeignKey("Genral_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Employee");
 
                     b.Navigation("GenrealSetting");
                 });
@@ -444,6 +460,8 @@ namespace HrProject.Migrations
             modelBuilder.Entity("HrProject.Models.Employee", b =>
                 {
                     b.Navigation("Attendances");
+
+                    b.Navigation("EmployeeHolidays");
                 });
 
             modelBuilder.Entity("HrProject.Models.GeneralSetting", b =>

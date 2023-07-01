@@ -17,7 +17,7 @@ namespace HrProject.Controllers
 		{
 			this.groupRepository = groupRepository;
 			this.roleManager = roleManager;
-		} 
+		}
 		[HttpGet]
 		[Authorize(Permissions.Permission.View)]
 		public async Task<IActionResult> Index()
@@ -45,6 +45,14 @@ namespace HrProject.Controllers
 		[Authorize(Permissions.Permission.Add)]
 		public async Task<IActionResult> AddGroup(PermissionFormViewModel model)
 		{
+			int counter = 0;
+			foreach (var item in model.RoleClaims)
+			{
+				if (!item.IsSeleced)
+					counter++;
+			}
+			if (counter == 24)
+				ModelState.AddModelError("RoleClaims", "Please Select the Permissions");
 			if (!ModelState.IsValid)
 				return View(model);
 			if (await roleManager.RoleExistsAsync(model.RoleName))
@@ -92,6 +100,16 @@ namespace HrProject.Controllers
 		[Authorize(Permissions.Permission.Edit)]
 		public async Task<IActionResult> Edit(PermissionFormViewModel model)
 		{
+			int counter = 0;
+			foreach (var item in model.RoleClaims)
+			{
+				if (!item.IsSeleced)
+					counter++;
+			}
+
+			if (counter == 24)
+				ModelState.AddModelError("RoleClaims", "Please Select the Permissions");
+
 			if (!ModelState.IsValid)
 				return View(model);
 			var groupRole = await roleManager.FindByIdAsync(model.RoleId);
@@ -113,7 +131,7 @@ namespace HrProject.Controllers
 		[Authorize(Permissions.Permission.Delete)]
 		public async Task<IActionResult> Delete(string groupId)
 		{
-			var role =await roleManager.FindByIdAsync(groupId);
+			var role = await roleManager.FindByIdAsync(groupId);
 			if (role == null)
 				return NotFound();
 			groupRepository.Delete(role);
