@@ -8,19 +8,22 @@ namespace HrProject.Controllers
     public class EmployeeController : Controller
     {
         // GET: EmployeeController
+        [Authorize(Permissions.Employee.View)]
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: EmployeeController/Details/5
-        public ActionResult Details(int id)
+		// GET: EmployeeController/Details/5
+		[Authorize(Permissions.Employee.View)]
+		public ActionResult Details(int id)
         {
             return View();
         }
 
         // GET: EmployeeController/Create
         //[Authorize(Permissions.Employee.Add)]
+        [Authorize(Permissions.Employee.Add)]
         public ActionResult Create()
         {
             return View();
@@ -29,7 +32,8 @@ namespace HrProject.Controllers
         // POST: EmployeeController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+		[Authorize(Permissions.Employee.Add)]
+		public ActionResult Create(IFormCollection collection)
         {
             try
             {
@@ -42,6 +46,7 @@ namespace HrProject.Controllers
         }
 
         // GET: EmployeeController/Edit/5
+        [Authorize(Permissions.Employee.Edit)]
         public ActionResult Edit(int id)
         {
             return View();
@@ -50,7 +55,8 @@ namespace HrProject.Controllers
         // POST: EmployeeController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+		[Authorize(Permissions.Employee.Edit)]
+		public ActionResult Edit(int id, IFormCollection collection)
         {
             try
             {
@@ -63,6 +69,7 @@ namespace HrProject.Controllers
         }
 
         // GET: EmployeeController/Delete/5
+        [Authorize(Permissions.Employee.Delete)]
         public ActionResult Delete(int id)
         {
             return View();
@@ -71,7 +78,8 @@ namespace HrProject.Controllers
         // POST: EmployeeController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+		[Authorize(Permissions.Employee.Delete)]
+		public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {

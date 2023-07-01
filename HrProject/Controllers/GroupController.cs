@@ -1,6 +1,7 @@
 ﻿using HrProject.Global;
 using HrProject.Repositories.GroupRepo;
 using HrProject.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -16,13 +17,16 @@ namespace HrProject.Controllers
 		{
 			this.groupRepository = groupRepository;
 			this.roleManager = roleManager;
-		}
+		} 
+		[HttpGet]
+		[Authorize(Permissions.Permission.View)]
 		public async Task<IActionResult> Index()
 		{
 			var allRoles = await groupRepository.GetRolesAsync();
 			return View(allRoles);
 		}
-
+		[HttpGet]
+		[Authorize(Permissions.Permission.Add)]
 		public IActionResult AddGroup()
 		{
 			var allClaims = Permissions.GenerateAllPermissions();
@@ -38,6 +42,7 @@ namespace HrProject.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Permissions.Permission.Add)]
 		public async Task<IActionResult> AddGroup(PermissionFormViewModel model)
 		{
 			if (!ModelState.IsValid)
@@ -57,6 +62,8 @@ namespace HrProject.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
+		[HttpGet]
+		[Authorize(Permissions.Permission.Edit)]
 		public async Task<IActionResult> Edit(string groupId)
 		{
 			var role = await roleManager.FindByIdAsync(groupId);
@@ -82,6 +89,7 @@ namespace HrProject.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Permissions.Permission.Edit)]
 		public async Task<IActionResult> Edit(PermissionFormViewModel model)
 		{
 			if (!ModelState.IsValid)
@@ -102,6 +110,7 @@ namespace HrProject.Controllers
 			return RedirectToAction("Index");
 		}
 
+		[Authorize(Permissions.Permission.Delete)]
 		public async Task<IActionResult> Delete(string groupId)
 		{
 			var role =await roleManager.FindByIdAsync(groupId);

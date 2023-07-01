@@ -7,6 +7,7 @@
 		Department,
 		Salary,
 		Attendance,
+		Permission,
 
 	}
 }
