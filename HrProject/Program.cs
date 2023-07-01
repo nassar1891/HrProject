@@ -1,7 +1,9 @@
 using HrProject.Data.DataInitilaizer;
 using HrProject.Filter;
 using HrProject.Models;
+using HrProject.Repositories.GeneralSettingRepo;
 using HrProject.Repositories.GroupRepo;
+using HrProject.Repositories.HolidayRepo;
 using HrProject.Repositories.UserRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -40,6 +42,8 @@ namespace HrProject
 
 			builder.Services.AddScoped<IGroupRepository, GroupRepositroy>();
 			builder.Services.AddScoped<IUserRepository, UserRepository>();
+			builder.Services.AddScoped<IGeneralSettingRepository, GeneralSetiingRepository>();
+			builder.Services.AddScoped<IWeeklyHolidayRepository, WeeklyHolidayRepository>();
 
 			var app = builder.Build();
 

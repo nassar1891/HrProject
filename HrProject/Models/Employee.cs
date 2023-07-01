@@ -39,5 +39,4 @@ public class Employee
 
     public virtual Department? Department { get; set; }
     public virtual ICollection<Attendance>? Attendances { get; set; } = new List<Attendance>();
-    public virtual ICollection<EmployeeHoliday>? EmployeeHolidays { get; set; } = new List<EmployeeHoliday>();
 }
