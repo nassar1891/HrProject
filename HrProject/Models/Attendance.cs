@@ -7,14 +7,15 @@ namespace HrProject.Models;
 
 
 
-[PrimaryKey(nameof(Date),nameof(Emp_Id))]
+//[PrimaryKey(nameof(Date),nameof(Emp_Id))]
 public class Attendance
 {
+    public int Id { get; set; }
     public DateTime Date { get; set; }
-
-    public TimeSpan ArrivalTime { get; set; }
-
-    public TimeSpan DepartureTime { get; set; }
+    public string ArrivalTime { get; set; }
+    public string DepartureTime { get; set; }
+    public int Bounshour { get; set; }
+    public int DiscountHour { get; set; }
 
     [ForeignKey("Employee")]
     public int? Emp_Id { get; set; }
