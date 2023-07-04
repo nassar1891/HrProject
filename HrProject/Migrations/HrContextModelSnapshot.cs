@@ -24,19 +24,33 @@ namespace HrProject.Migrations
 
             modelBuilder.Entity("HrProject.Models.Attendance", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ArrivalTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Bounshour")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("DepartureTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DiscountHour")
+                        .HasColumnType("int");
 
                     b.Property<int?>("Emp_Id")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("ArrivalTime")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("DepartureTime")
-                        .HasColumnType("time");
-
-                    b.HasKey("Date", "Emp_Id");
+                    b.HasKey("Id");
 
                     b.HasIndex("Emp_Id");
 
@@ -68,7 +82,7 @@ namespace HrProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<TimeSpan>("ArrivalTime")
+                    b.Property<TimeSpan?>("ArrivalTime")
                         .HasColumnType("time");
 
                     b.Property<DateTime?>("BirthDate")
@@ -100,15 +114,17 @@ namespace HrProject.Migrations
                     b.Property<TimeSpan?>("LeaveTime")
                         .HasColumnType("time");
 
-                    b.Property<int>("NationalId")
-                        .HasColumnType("int");
+                    b.Property<string>("NationalId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nationality")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Phone")
-                        .HasColumnType("int");
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Salary")
                         .HasColumnType("float");
@@ -356,9 +372,7 @@ namespace HrProject.Migrations
                 {
                     b.HasOne("HrProject.Models.Employee", "Employee")
                         .WithMany("Attendances")
-                        .HasForeignKey("Emp_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Emp_Id");
 
                     b.Navigation("Employee");
                 });

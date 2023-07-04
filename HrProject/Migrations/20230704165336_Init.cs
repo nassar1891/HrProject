@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HrProject.Migrations
 {
     /// <inheritdoc />
-    public partial class v1 : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,6 +62,19 @@ namespace HrProject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Departments", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GeneralSettings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    ValueExtra = table.Column<int>(type: "int", nullable: false),
+                    ValueDiscount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GeneralSettings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -180,10 +193,10 @@ namespace HrProject.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<int>(type: "int", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nationality = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NationalId = table.Column<int>(type: "int", nullable: false),
+                    NationalId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Salary = table.Column<double>(type: "float", nullable: false),
                     HireDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     BirthDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -203,41 +216,44 @@ namespace HrProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Attendances",
+                name: "EmployeeHolidays",
                 columns: table => new
                 {
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Emp_Id = table.Column<int>(type: "int", nullable: false),
-                    ArrivalTime = table.Column<TimeSpan>(type: "time", nullable: false),
-                    DepartureTime = table.Column<TimeSpan>(type: "time", nullable: false)
+                    Holiday = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Genral_Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Attendances", x => new { x.Date, x.Emp_Id });
+                    table.PrimaryKey("PK_EmployeeHolidays", x => new { x.Holiday, x.Genral_Id });
                     table.ForeignKey(
-                        name: "FK_Attendances_Employees_Emp_Id",
-                        column: x => x.Emp_Id,
-                        principalTable: "Employees",
+                        name: "FK_EmployeeHolidays_GeneralSettings_Genral_Id",
+                        column: x => x.Genral_Id,
+                        principalTable: "GeneralSettings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "EmployeeHolidays",
+                name: "Attendances",
                 columns: table => new
                 {
-                    Holiday = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Emp_Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ArrivalTime = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DepartureTime = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Bounshour = table.Column<int>(type: "int", nullable: false),
+                    DiscountHour = table.Column<int>(type: "int", nullable: false),
+                    Emp_Id = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeHolidays", x => new { x.Holiday, x.Emp_Id });
+                    table.PrimaryKey("PK_Attendances", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EmployeeHolidays_Employees_Emp_Id",
+                        name: "FK_Attendances_Employees_Emp_Id",
                         column: x => x.Emp_Id,
                         principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -285,9 +301,9 @@ namespace HrProject.Migrations
                 column: "Emp_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EmployeeHolidays_Emp_Id",
+                name: "IX_EmployeeHolidays_Genral_Id",
                 table: "EmployeeHolidays",
-                column: "Emp_Id");
+                column: "Genral_Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_Departmentid",
@@ -327,6 +343,9 @@ namespace HrProject.Migrations
 
             migrationBuilder.DropTable(
                 name: "Employees");
+
+            migrationBuilder.DropTable(
+                name: "GeneralSettings");
 
             migrationBuilder.DropTable(
                 name: "Departments");

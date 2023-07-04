@@ -47,7 +47,7 @@ namespace HrProject.Repositories.EmployeeRepo
         }
         public Employee GetEmployeeByNationalId(int Id)
         {
-            return context.Employees.FirstOrDefault(e => e.NationalId == Id);
+            return context.Employees.FirstOrDefault(e =>int.Parse(e.NationalId) == Id);
         }
 
     }

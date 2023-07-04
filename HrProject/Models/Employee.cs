@@ -16,13 +16,13 @@ public class Employee
 
     public string? City { get; set; } = null!;
 
-    public int Phone { get; set; }
+    public string Phone { get; set; }
 
     public string Gender { get; set; } = null!;
 
     public string Nationality { get; set; } = null!;
 
-    public int NationalId { get; set; }
+    public string NationalId { get; set; }
 
     public double Salary { get; set; }
 
@@ -30,7 +30,7 @@ public class Employee
 
     public DateTime? BirthDate { get; set; }
 
-    public TimeSpan ArrivalTime { get; set; }
+    public TimeSpan? ArrivalTime { get; set; }
 
     public TimeSpan? LeaveTime { get; set; }
 

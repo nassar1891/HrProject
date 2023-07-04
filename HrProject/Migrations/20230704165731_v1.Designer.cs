@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrProject.Migrations
 {
     [DbContext(typeof(HrContext))]
-    [Migration("20230701114237_v2")]
-    partial class v2
+    [Migration("20230704165731_v1")]
+    partial class v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,19 +27,33 @@ namespace HrProject.Migrations
 
             modelBuilder.Entity("HrProject.Models.Attendance", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ArrivalTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Bounshour")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("DepartureTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DiscountHour")
+                        .HasColumnType("int");
 
                     b.Property<int?>("Emp_Id")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("ArrivalTime")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("DepartureTime")
-                        .HasColumnType("time");
-
-                    b.HasKey("Date", "Emp_Id");
+                    b.HasKey("Id");
 
                     b.HasIndex("Emp_Id");
 
@@ -71,7 +85,7 @@ namespace HrProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<TimeSpan>("ArrivalTime")
+                    b.Property<TimeSpan?>("ArrivalTime")
                         .HasColumnType("time");
 
                     b.Property<DateTime?>("BirthDate")
@@ -103,15 +117,17 @@ namespace HrProject.Migrations
                     b.Property<TimeSpan?>("LeaveTime")
                         .HasColumnType("time");
 
-                    b.Property<int>("NationalId")
-                        .HasColumnType("int");
+                    b.Property<string>("NationalId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nationality")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Phone")
-                        .HasColumnType("int");
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Salary")
                         .HasColumnType("float");
@@ -125,18 +141,13 @@ namespace HrProject.Migrations
 
             modelBuilder.Entity("HrProject.Models.EmployeeHoliday", b =>
                 {
-                    b.Property<DateTime>("Holiday")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Emp_Id")
-                        .HasColumnType("int");
+                    b.Property<string>("Holiday")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Genral_Id")
                         .HasColumnType("int");
 
-                    b.HasKey("Holiday", "Emp_Id");
-
-                    b.HasIndex("Emp_Id");
+                    b.HasKey("Holiday", "Genral_Id");
 
                     b.HasIndex("Genral_Id");
 
@@ -146,10 +157,7 @@ namespace HrProject.Migrations
             modelBuilder.Entity("HrProject.Models.GeneralSetting", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("ValueDiscount")
                         .HasColumnType("int");
@@ -367,9 +375,7 @@ namespace HrProject.Migrations
                 {
                     b.HasOne("HrProject.Models.Employee", "Employee")
                         .WithMany("Attendances")
-                        .HasForeignKey("Emp_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Emp_Id");
 
                     b.Navigation("Employee");
                 });
@@ -387,19 +393,11 @@ namespace HrProject.Migrations
 
             modelBuilder.Entity("HrProject.Models.EmployeeHoliday", b =>
                 {
-                    b.HasOne("HrProject.Models.Employee", "Employee")
-                        .WithMany("EmployeeHolidays")
-                        .HasForeignKey("Emp_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HrProject.Models.GeneralSetting", "GenrealSetting")
                         .WithMany("DayOff")
                         .HasForeignKey("Genral_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Employee");
 
                     b.Navigation("GenrealSetting");
                 });
@@ -463,8 +461,6 @@ namespace HrProject.Migrations
             modelBuilder.Entity("HrProject.Models.Employee", b =>
                 {
                     b.Navigation("Attendances");
-
-                    b.Navigation("EmployeeHolidays");
                 });
 
             modelBuilder.Entity("HrProject.Models.GeneralSetting", b =>
