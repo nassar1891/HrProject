@@ -1,24 +1,47 @@
 ﻿using HrProject.Global;
+using HrProject.Repositories.EmployeeRepo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using static HrProject.Global.Permissions;
+using System.Diagnostics.Metrics;
+using HrProject.Repositories.DepartmentRepo;
 
 namespace HrProject.Controllers
 {
     public class EmployeeController : Controller
     {
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IDepartmentRepository _departmentRepository;
+
+
+        public EmployeeController(IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository)
+        {
+            _employeeRepository = employeeRepository;
+            _departmentRepository = departmentRepository;   
+        }
         // GET: EmployeeController
         [Authorize(Permissions.Employee.View)]
         public ActionResult Index()
         {
-            return View();
+            var departments = _departmentRepository.GetAllDepartments();
+            ViewBag.DepartmentList = departments.Select(x => new SelectListItem
+            {
+                Text = x.DeptName,
+                Value = x.Id.ToString()
+            });
+
+            var employees = _employeeRepository.GetAllEmployees();
+            return View(employees);
         }
 
 		// GET: EmployeeController/Details/5
 		[Authorize(Permissions.Employee.View)]
 		public ActionResult Details(int id)
         {
-            return View();
+            var emp = _employeeRepository.GetEmployeeById(id);
+            return View(emp);
         }
 
         // GET: EmployeeController/Create
@@ -26,6 +49,13 @@ namespace HrProject.Controllers
         [Authorize(Permissions.Employee.Add)]
         public ActionResult Create()
         {
+            var departments = _departmentRepository.GetAllDepartments();
+            ViewBag.DepartmentList = departments.Select(x => new SelectListItem
+            {
+                Text = x.DeptName,
+                Value = x.Id.ToString()
+            });
+
             return View();
         }
 
@@ -35,21 +65,41 @@ namespace HrProject.Controllers
 		[Authorize(Permissions.Employee.Add)]
 		public ActionResult Create(IFormCollection collection)
         {
-            try
+            var newEmp = new Models.Employee
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+                FirstName = collection.FirstOrDefault(x => x.Key == "FirstName").Value,
+                LastName = collection.FirstOrDefault(x => x.Key == "LastName").Value,
+                Country = collection.FirstOrDefault(x => x.Key == "Country").Value,
+                City = collection.FirstOrDefault(x => x.Key == "City").Value,
+                Phone = collection.FirstOrDefault(x => x.Key == "Phone").Value,
+                Gender = collection.FirstOrDefault(x => x.Key == "Gender").Value,
+                Nationality = collection.FirstOrDefault(x => x.Key == "Nationality").Value,
+                NationalId = collection.FirstOrDefault(x => x.Key == "NationalId").Value,
+                Salary = Convert.ToInt32(collection.FirstOrDefault(x => x.Key == "Salary").Value),
+                HireDate = Convert.ToDateTime(collection.FirstOrDefault(x => x.Key =="HireDate").Value),
+                BirthDate = Convert.ToDateTime(collection.FirstOrDefault(x => x.Key =="BirthDate").Value),
+                ArrivalTime = TimeSpan.Parse(collection.FirstOrDefault(x => x.Key == "ArrivalTime").Value),
+                LeaveTime = TimeSpan.Parse(collection.FirstOrDefault(x => x.Key == "LeaveTime").Value),
+                Departmentid = Convert.ToInt32(collection.FirstOrDefault(x => x.Key == "DepartmentList").Value),
+            };
+            _employeeRepository.Insert(newEmp);
+
+            return RedirectToAction("Index");
         }
 
         // GET: EmployeeController/Edit/5
         [Authorize(Permissions.Employee.Edit)]
         public ActionResult Edit(int id)
         {
-            return View();
+            var emp = _employeeRepository.GetEmployeeById(id);
+            var departments = _departmentRepository.GetAllDepartments();
+            ViewBag.DepartmentList = departments.Select(x => new SelectListItem
+            {
+                Text = x.DeptName,
+                Value = x.Id.ToString(),
+                Selected = x.Id == emp.Departmentid
+            });
+            return View(emp);
         }
 
         // POST: EmployeeController/Edit/5
@@ -58,21 +108,40 @@ namespace HrProject.Controllers
 		[Authorize(Permissions.Employee.Edit)]
 		public ActionResult Edit(int id, IFormCollection collection)
         {
-            try
+            var newEmp = new Models.Employee
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+                FirstName = collection.FirstOrDefault(x => x.Key == "FirstName").Value,
+                LastName = collection.FirstOrDefault(x => x.Key == "LastName").Value,
+                Country = collection.FirstOrDefault(x => x.Key == "Country").Value,
+                City = collection.FirstOrDefault(x => x.Key == "City").Value,
+                Phone = collection.FirstOrDefault(x => x.Key == "Phone").Value,
+                Gender = collection.FirstOrDefault(x => x.Key == "Gender").Value,
+                Nationality = collection.FirstOrDefault(x => x.Key == "Nationality").Value,
+                NationalId = collection.FirstOrDefault(x => x.Key == "NationalId").Value,
+                Salary = Convert.ToInt32(collection.FirstOrDefault(x => x.Key == "Salary").Value),
+                HireDate = Convert.ToDateTime(collection.FirstOrDefault(x => x.Key == "HireDate").Value),
+                BirthDate = Convert.ToDateTime(collection.FirstOrDefault(x => x.Key == "BirthDate").Value),
+                ArrivalTime = TimeSpan.Parse(collection.FirstOrDefault(x => x.Key == "ArrivalTime").Value),
+                LeaveTime = TimeSpan.Parse(collection.FirstOrDefault(x => x.Key == "LeaveTime").Value),
+                Departmentid = Convert.ToInt32(collection.FirstOrDefault(x => x.Key == "DepartmentList").Value),
+            };
+            _employeeRepository.Update(newEmp);
+            return RedirectToAction("Index");
         }
 
         // GET: EmployeeController/Delete/5
         [Authorize(Permissions.Employee.Delete)]
         public ActionResult Delete(int id)
         {
-            return View();
+            var emp = _employeeRepository.GetEmployeeById(id);
+            var departments = _departmentRepository.GetAllDepartments();
+            ViewBag.DepartmentList = departments.Select(x => new SelectListItem
+            {
+                Text = x.DeptName,
+                Value = x.Id.ToString(),
+                Selected = x.Id == emp.Departmentid
+            });
+            return View(emp);
         }
 
         // POST: EmployeeController/Delete/5
@@ -81,14 +150,8 @@ namespace HrProject.Controllers
 		[Authorize(Permissions.Employee.Delete)]
 		public ActionResult Delete(int id, IFormCollection collection)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _employeeRepository.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

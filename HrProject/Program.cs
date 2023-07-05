@@ -1,6 +1,8 @@
 using HrProject.Data.DataInitilaizer;
 using HrProject.Filter;
 using HrProject.Models;
+using HrProject.Repositories.DepartmentRepo;
+using HrProject.Repositories.EmployeeRepo;
 using HrProject.Repositories.GeneralSettingRepo;
 using HrProject.Repositories.GroupRepo;
 using HrProject.Repositories.HolidayRepo;
@@ -22,8 +24,10 @@ namespace HrProject
 			builder.Services.AddControllersWithViews();
 			builder.Services.AddDbContext<HrContext>(
 				option => option.UseSqlServer(builder.Configuration.GetConnectionString("hrConnection")));
+            builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddTransient<IDepartmentRepository, DepartmentRepository>();
 
-			builder.Services.AddIdentity<HrUser, IdentityRole>(
+            builder.Services.AddIdentity<HrUser, IdentityRole>(
 				option =>
 				{
 					option.Password.RequireNonAlphanumeric = false;
