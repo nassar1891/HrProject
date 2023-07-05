@@ -36,7 +36,7 @@ public class Employee
 
 	[ForeignKey("Department")]
 	public int Departmentid { get; set; }
+    public virtual Department Department { get; set; }
 
-    public virtual Department? Department { get; set; }
     public virtual ICollection<Attendance>? Attendances { get; set; } = new List<Attendance>();
 }

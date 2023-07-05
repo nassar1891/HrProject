@@ -16,7 +16,7 @@ namespace HrProject.Repositories.EmployeeRepo
         }
         public Employee GetEmployeeById(int id)
         {
-            return context.Employees.Include(e=>e.Department).FirstOrDefault(emp => emp.Id == id);
+            return context.Employees.Include(e => e.Department).FirstOrDefault(emp => emp.Id == id);
         }
         public List< Employee> GetEmployeeByName(string name)
         {
@@ -34,10 +34,12 @@ namespace HrProject.Repositories.EmployeeRepo
             context.Employees.Add(employee);
             context.SaveChanges();
         }
-        public void Update(Employee employee)
+        public async Task Update(Employee employee)
         {
-            context.Employees.Update(employee);
+            //context.Employees.Update(employee);
+            context.Entry(employee).State = EntityState.Modified;
             context.SaveChanges();
+            
         }
         public void Delete(int id)
         {
