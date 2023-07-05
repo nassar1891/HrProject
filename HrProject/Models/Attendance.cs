@@ -14,6 +14,7 @@ public class Attendance
     public DateTime Date { get; set; }
     public string ArrivalTime { get; set; }
     public string DepartureTime { get; set; }
+    public bool Absent { get; set; }
     public int Bounshour { get; set; }
     public int DiscountHour { get; set; }
 
