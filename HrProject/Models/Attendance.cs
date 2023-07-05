@@ -8,6 +8,9 @@ namespace HrProject.Models;
 
 
 //[PrimaryKey(nameof(Date),nameof(Emp_Id))]
+/// <summary>
+/// //
+/// </summary>
 public class Attendance
 {
     public int Id { get; set; }
