@@ -1,11 +1,7 @@
 using HrProject.Data.DataInitilaizer;
 using HrProject.Filter;
 using HrProject.Models;
-<<<<<<< HEAD
 using HrProject.Repositories.AttendanceRepository;
-=======
-using HrProject.Repositories.AttendanceRepo;
->>>>>>> d2de3bdbe40d22c357e33818d686dbde43129574
 using HrProject.Repositories.DepartmentRepo;
 using HrProject.Repositories.EmployeeRepo;
 using HrProject.Repositories.GeneralSettingRepo;
@@ -29,9 +25,7 @@ namespace HrProject
 			builder.Services.AddControllersWithViews();
 			builder.Services.AddDbContext<HrContext>(
 				option => option.UseSqlServer(builder.Configuration.GetConnectionString("hrConnection")));
-            builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
-            builder.Services.AddTransient<IDepartmentRepository, DepartmentRepository>();
-            builder.Services.AddTransient<IAttendantRepo, attendantRepo>();
+            
             builder.Services.AddIdentity<HrUser, IdentityRole>(
 				option =>
 				{
@@ -54,8 +48,10 @@ namespace HrProject
 			builder.Services.AddScoped<IGeneralSettingRepository, GeneralSetiingRepository>();
 			builder.Services.AddScoped<IWeeklyHolidayRepository, WeeklyHolidayRepository>();
 			builder.Services.AddScoped<IAttendanceRepositary, AttendanceRepositary>();
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 
-			var app = builder.Build();
+            var app = builder.Build();
 
 			// Configure the HTTP request pipeline.
 			if (!app.Environment.IsDevelopment())
