@@ -15,8 +15,8 @@ public class Attendance
 {
     public int Id { get; set; }
     public DateTime Date { get; set; }
-    public string ArrivalTime { get; set; }
-    public string DepartureTime { get; set; }
+    public string? ArrivalTime { get; set; }
+    public string? DepartureTime { get; set; }
     public bool Absent { get; set; }
     public int Bounshour { get; set; }
     public int DiscountHour { get; set; }
@@ -24,5 +24,5 @@ public class Attendance
     [ForeignKey("Employee")]
     public int? Emp_Id { get; set; }
 
-    public virtual Employee? Employee { get; set; } = null!;
+    public virtual Employee Employee { get; set; }
 }

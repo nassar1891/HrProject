@@ -1,6 +1,7 @@
 using HrProject.Data.DataInitilaizer;
 using HrProject.Filter;
 using HrProject.Models;
+using HrProject.Repositories.AttendanceRepo;
 using HrProject.Repositories.DepartmentRepo;
 using HrProject.Repositories.EmployeeRepo;
 using HrProject.Repositories.GeneralSettingRepo;
@@ -26,7 +27,7 @@ namespace HrProject
 				option => option.UseSqlServer(builder.Configuration.GetConnectionString("hrConnection")));
             builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddTransient<IDepartmentRepository, DepartmentRepository>();
-
+            builder.Services.AddTransient<IAttendantRepo, attendantRepo>();
             builder.Services.AddIdentity<HrUser, IdentityRole>(
 				option =>
 				{
