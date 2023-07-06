@@ -1,6 +1,7 @@
 using HrProject.Data.DataInitilaizer;
 using HrProject.Filter;
 using HrProject.Models;
+using HrProject.Repositories.AttendanceRepository;
 using HrProject.Repositories.DepartmentRepo;
 using HrProject.Repositories.EmployeeRepo;
 using HrProject.Repositories.GeneralSettingRepo;
@@ -48,6 +49,7 @@ namespace HrProject
 			builder.Services.AddScoped<IUserRepository, UserRepository>();
 			builder.Services.AddScoped<IGeneralSettingRepository, GeneralSetiingRepository>();
 			builder.Services.AddScoped<IWeeklyHolidayRepository, WeeklyHolidayRepository>();
+			builder.Services.AddScoped<IAttendanceRepositary, AttendanceRepositary>();
 
 			var app = builder.Build();
 
