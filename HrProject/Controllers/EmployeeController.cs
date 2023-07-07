@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using static HrProject.Global.Permissions;
 using System.Diagnostics.Metrics;
 using HrProject.Repositories.DepartmentRepo;
+using HrProject.ViewModels;
 
 namespace HrProject.Controllers
 {
@@ -99,7 +100,22 @@ namespace HrProject.Controllers
                 Value = x.Id.ToString(),
                 Selected = x.Id == emp.Departmentid
             });
-            return View(emp);
+            var empVM = new EmployeeViewModel() {
+                FirstName = emp.FirstName,
+                LastName = emp.LastName,
+                Country = emp.Country,
+                City = emp.City,
+                Phone = emp.Phone,
+                Gender = emp.Gender,
+                Nationality = emp.Nationality,
+                NationalId = emp.NationalId,
+                Salary = emp.Salary,
+                HireDate = emp.HireDate,
+                BirthDate = emp.BirthDate,
+                ArrivalTime = emp.ArrivalTime,
+                LeaveTime = emp.LeaveTime,
+            };
+            return View(empVM);
         }
 
         // POST: EmployeeController/Edit/5
@@ -125,7 +141,7 @@ namespace HrProject.Controllers
                 LeaveTime = TimeSpan.Parse(collection.FirstOrDefault(x => x.Key == "LeaveTime").Value),
                 Departmentid = Convert.ToInt32(collection.FirstOrDefault(x => x.Key == "DepartmentList").Value),
             };
-            _employeeRepository.Update(newEmp);
+            _employeeRepository.Update(id, newEmp);
             return RedirectToAction("Index");
         }
 

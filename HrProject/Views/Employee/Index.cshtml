@@ -92,10 +92,16 @@
                         @Html.DisplayFor(modelItem => item.Salary)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.HireDate)
+                        @if (item.HireDate.HasValue)
+                        {
+                            <text>@item.HireDate.Value.ToShortDateString()</text>
+                        }
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.BirthDate)
+                        @if (item.BirthDate.HasValue)
+                        {
+                            <text>@item.BirthDate.Value.ToShortDateString()</text>
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ArrivalTime)

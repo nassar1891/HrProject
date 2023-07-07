@@ -34,12 +34,29 @@ namespace HrProject.Repositories.EmployeeRepo
             context.Employees.Add(employee);
             context.SaveChanges();
         }
-        public async Task Update(Employee employee)
+        public void Update(int id, Employee employee)
         {
-            //context.Employees.Update(employee);
-            context.Entry(employee).State = EntityState.Modified;
-            context.SaveChanges();
-            
+            Employee existingEmployee = context.Employees.FirstOrDefault(e => e.Id == id);
+            if (existingEmployee != null)
+            {
+                existingEmployee.FirstName = employee.FirstName;
+                existingEmployee.LastName = employee.LastName;
+                existingEmployee.Country = employee.Country;
+                existingEmployee.City = employee.City;
+                existingEmployee.Phone = employee.Phone;
+                existingEmployee.Gender = employee.Gender;
+                existingEmployee.Nationality = employee.Nationality;
+                existingEmployee.NationalId = employee.NationalId;
+                existingEmployee.Salary = employee.Salary;
+                existingEmployee.HireDate = employee.HireDate;
+                existingEmployee.BirthDate = employee.BirthDate;
+                existingEmployee.ArrivalTime = employee.ArrivalTime;
+                existingEmployee.LeaveTime = employee.LeaveTime;
+                existingEmployee.Departmentid = employee.Departmentid;
+                // Update any other properties that need to be changed
+
+                context.SaveChanges();
+            }
         }
         public void Delete(int id)
         {

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HrProject.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace HrProject.ViewModels
 {
@@ -30,14 +31,15 @@ namespace HrProject.ViewModels
 
         public double Salary { get; set; }
 
-        public DateTime HireDate { get; set; }
+        public DateTime? HireDate { get; set; }
 
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
 
-        public TimeSpan ArrivalTime { get; set; }
+        public TimeSpan? ArrivalTime { get; set; }
 
-        public TimeSpan LeaveTime { get; set; }
+        public TimeSpan? LeaveTime { get; set; }
         public string Department { get; set; }
 
+        
     }
 }
