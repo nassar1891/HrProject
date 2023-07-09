@@ -15,11 +15,11 @@ public class Attendance
 {
     public int Id { get; set; }
     public DateTime Date { get; set; }
-    public string? ArrivalTime { get; set; }
-    public string? DepartureTime { get; set; }
+    public DateTime? ArrivalTime { get; set; }
+    public DateTime? DepartureTime { get; set; }
     public bool Absent { get; set; }
-    public int Bounshour { get; set; }
-    public int DiscountHour { get; set; }
+    public int? Bounshour { get; set; }
+    public int? DiscountHour { get; set; }
 
     [ForeignKey("Employee")]
     public int? Emp_Id { get; set; }

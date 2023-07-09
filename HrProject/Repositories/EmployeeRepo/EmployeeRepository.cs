@@ -14,7 +14,7 @@ namespace HrProject.Repositories.EmployeeRepo
         {
             return context.Employees.ToList();
         }
-        public Employee GetEmployeeById(int id)
+        public Employee GetEmployeeById(int? id)
         {
             return context.Employees.Include(e => e.Department).FirstOrDefault(emp => emp.Id == id);
         }
@@ -69,5 +69,21 @@ namespace HrProject.Repositories.EmployeeRepo
             return context.Employees.FirstOrDefault(e =>int.Parse(e.NationalId) == Id);
         }
 
-    }
+		public double GetSalary(int? empId)
+		{
+            return context.Employees.Where(n => n.Id == empId).Select(n => n.Salary).FirstOrDefault();
+		}
+
+		public int? GetStartTime(int? empId)
+		{
+            var startTime =context.Employees.Where(n => n.Id == empId).Select(n => n.ArrivalTime).FirstOrDefault();
+            return startTime?.Hours;
+		}
+
+		public int? GetLeaveTime(int? empId)
+		{
+			var endTime = context.Employees.Where(n => n.Id == empId).Select(n => n.LeaveTime).FirstOrDefault();
+			return endTime?.Hours;
+		}
+	}
 }

@@ -4,6 +4,7 @@ using HrProject.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrProject.Migrations
 {
     [DbContext(typeof(HrContext))]
-    partial class HrContextModelSnapshot : ModelSnapshot
+    [Migration("20230707234204_v10")]
+    partial class v10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +39,7 @@ namespace HrProject.Migrations
                     b.Property<DateTime?>("ArrivalTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Bounshour")
+                    b.Property<int>("Bounshour")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
@@ -45,7 +48,7 @@ namespace HrProject.Migrations
                     b.Property<DateTime?>("DepartureTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DiscountHour")
+                    b.Property<int>("DiscountHour")
                         .HasColumnType("int");
 
                     b.Property<int?>("Emp_Id")
