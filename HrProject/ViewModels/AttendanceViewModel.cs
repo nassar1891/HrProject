@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HrProject.Validation;
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace HrProject.ViewModels
 {
@@ -11,7 +13,10 @@ namespace HrProject.ViewModels
 		public DateTime ArrivalTime { get; set; }
 
 		[Required(ErrorMessage ="Please Chechout")]
+		[Attendance]
 		public DateTime DepartureTime { get; set; }
+
+		[Required(ErrorMessage ="Please Select Employee")]
         public int? EmpId { get; set; }
 
         //-------------------

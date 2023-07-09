@@ -1,4 +1,5 @@
 ﻿using HrProject.Models;
+using HrProject.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace HrProject.ViewModels
@@ -15,8 +16,8 @@ namespace HrProject.ViewModels
 
         public string City { get; set; } = null!;
 
-        [MinLength(11)]
         [MaxLength(11)]
+        [RegularExpression(@"^(010|011|012|015)[0-9]{8}$",ErrorMessage ="Enter Valid Phone Number")]
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
 
@@ -29,15 +30,21 @@ namespace HrProject.ViewModels
         [RegularExpression("^[0-9]{14}$", ErrorMessage = "The value must be a 14-digit number.")]
         public string NationalId { get; set; }
 
+
+        [Range(5000,50000,ErrorMessage ="Salary Must Be between 5000 and 50000")]
         public double Salary { get; set; }
 
+        [HireDate]
         public DateTime? HireDate { get; set; }
 
         public DateTime? BirthDate { get; set; }
 
+        [Required]
         public TimeSpan? ArrivalTime { get; set; }
 
-        public TimeSpan? LeaveTime { get; set; }
+		[Required]
+        [Attendance]
+		public TimeSpan? LeaveTime { get; set; }
         public string Department { get; set; }
 
         

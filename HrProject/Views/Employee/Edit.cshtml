@@ -6,90 +6,95 @@
 
 <hr />
 <div class="content-wrapper">
-    <div class="container-xxl flex-grow-1 container-p-y">
-        <div class="col-xxl">
-            <div class="card mb-4">
-                <h4 class="fw-bold py-3 ps-4 pt-4"><span class="text-muted fw-light">Edit/</span> Employees</h4>
+    <div class="container-xxl flex-grow-1 container-p-y ">
+        <div class="col-xxl ">
+            <div class="card mb-5">
+                <h4 class="fw-bold py-3 ps-4 pt-4"><span class="text-muted fw-light">Edit/</span> Employee</h4>
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <h5 class="mb-0">Required Data</h5>
                 </div>
                 <div class="card-body">
                     <form asp-action="Edit">
                         <div class="form-group">
-                            <label asp-for="FirstName" class="control-label"></label>
-                            <input asp-for="FirstName" class="form-control" />
+                            <label asp-for="FirstName" class="control-label pb-2"></label>
+                            <input asp-for="FirstName" class="form-control pb-2" />
                             <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="LastName" class="control-label"></label>
+                            <label asp-for="LastName" class="control-label pb-2 pt-2"></label>
                             <input asp-for="LastName" class="form-control" />
                             <span asp-validation-for="LastName" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Country" class="control-label"></label>
+                            <label asp-for="Country" class="control-label pb-2 pt-2"></label>
                             <input asp-for="Country" class="form-control" />
                             <span asp-validation-for="Country" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="City" class="control-label"></label>
+                            <label asp-for="City" class="control-label pb-2 pt-2"></label>
                             <input asp-for="City" class="form-control" />
                             <span asp-validation-for="City" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Phone" class="control-label"></label>
+                            <label asp-for="Phone" class="control-label pb-2 pt-2"></label>
                             <input asp-for="Phone" class="form-control" />
                             <span asp-validation-for="Phone" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Gender" class="control-label"></label>
+                            <label asp-for="Gender" class="control-label pb-2 pt-2"></label>
                             @Html.DropDownList("Gender", new SelectList(new[] { "male", "female" }), "-- Select Gender --", new { @class = "form-control" })
                             <span asp-validation-for="Gender" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Nationality" class="control-label"></label>
+                            <label asp-for="Nationality" class="control-label pb-2 pt-2"></label>
                             <input asp-for="Nationality" class="form-control" />
                             <span asp-validation-for="Nationality" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="NationalId" class="control-label"></label>
+                            <label asp-for="NationalId" class="control-label pb-2 pt-2"></label>
                             <input asp-for="NationalId" class="form-control" />
                             <span asp-validation-for="NationalId" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Salary" class="control-label"></label>
+                            <label asp-for="Salary" class="control-label pb-2 pt-2"></label>
                             <input asp-for="Salary" class="form-control" />
                             <span asp-validation-for="Salary" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="HireDate" class="control-label"></label>
+                            <label asp-for="HireDate" class="control-label pb-2 pt-2"></label>
                             <input asp-for="HireDate" class="form-control" type="date" />
                             <span asp-validation-for="HireDate" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="BirthDate" class="control-label"></label>
+                            <label asp-for="BirthDate" class="control-label pb-2 pt-2"></label>
                             <input asp-for="BirthDate" class="form-control" type="date" />
                             <span asp-validation-for="BirthDate" class="text-danger"></span>
 
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="ArrivalTime" class="control-label"></label>
+                            <label asp-for="ArrivalTime" class="control-label pb-2 pt-2"></label>
                             <input asp-for="ArrivalTime" class="form-control" type="time" />
                             <span asp-validation-for="ArrivalTime" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="LeaveTime" class="control-label"></label>
+                            <label asp-for="LeaveTime" class="control-label pb-2 pt-2"></label>
                             <input asp-for="LeaveTime" class="form-control" type="time" />
                             <span asp-validation-for="LeaveTime" class="text-danger"></span>
                         </div>
-                        <div class="form-group mt-3">
-                            <label asp-for="Department" class="form-control"></label>
+                        <div class="form-group mt-3 ">
+                            <label asp-for="Department" class="form-control pb-2 pt-2"></label>
                             @Html.DropDownList("DepartmentList")
                         </div>
-                        <div class="float-end demo-inline-spacing">
+                        <div class="float-end demo-inline-spacing pb-2 pt-2">
                             <div class="btn-group">
                                 <button type="submit" value="Edit" class="btn btn-primary me-3"><i class="bi bi-pencil-square"></i></button>
-                                <a class="btn btn-outline-danger" asp-action="Index"> <i class="bi bi-x-circle"></i></a>
+                                <a class="btn btn-outline-danger me-3" asp-action="Index"> <i class="bi bi-x-circle"></i></a>
+
+                                <a asp-action="Index" class="btn btn-success me-3">
+                                    <i class="bi bi-arrow-return-left"></i>
+                                        Back to List</a>
+                                
                             </div>
                         </div>
                     </form>
@@ -99,9 +104,7 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     <script src="/lib/jquery/dist/jquery.min.js"></script>

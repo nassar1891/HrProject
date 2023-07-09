@@ -39,4 +39,5 @@ public class Employee
     public virtual Department Department { get; set; }
 
     public virtual ICollection<Attendance>? Attendances { get; set; } = new List<Attendance>();
+    public bool IsDelelted { get; set; }
 }

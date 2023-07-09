@@ -15,7 +15,8 @@
 			<div class="form-group row">
 				<label class="col-md-3 label-control text-black" for="projectinput7">Employee Name </label>
 				<div class="col-md-9">
-					<select name="empId" asp-items="empList" class="form-control">
+					<select name="empId" asp-items="empList" class="form-control" required>
+						<option value="">--- Select Employee ---</option>
 					</select>
 				</div>
 			</div>
@@ -23,7 +24,7 @@
 				<label class="col-md-3 label-control text-black" for="projectinput9">Date </label>
 				<div class="col-md-9">
 					<div class="position-relative has-icon-left">
-						<input type="month" class="form-control" name="targetDate" placeholder="Select Month and Year">
+						<input type="month" class="form-control" name="targetDate" value="Select Month and Year">
 						<div class="form-control-position">
 							<i class="ft-message-square"></i>
 						</div>
