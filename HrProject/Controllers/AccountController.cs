@@ -41,14 +41,14 @@ namespace HrProject.Controllers
 			else if (await userRepository.CheckPasswordAsync(user, model.Password))
 			{
 				await signInManager.SignInAsync(user, model.RememberMe);
-				return RedirectToAction("Index", "User");
+				return RedirectToAction("Index", "Home");
 			}
 			else
 			{
 				ModelState.AddModelError("Password", "InValid Password");
 				return View(model);
 			}
-			return RedirectToAction("Index", "User");
+			return RedirectToAction("Index", "Home");
 
 		}
 
