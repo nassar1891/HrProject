@@ -5,7 +5,7 @@
 namespace HrProject.Migrations
 {
     /// <inheritdoc />
-    public partial class nv2 : Migration
+    public partial class nv3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

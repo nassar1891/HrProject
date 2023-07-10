@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrProject.Migrations
 {
     [DbContext(typeof(HrContext))]
-    [Migration("20230704165336_Init")]
-    partial class Init
+    [Migration("20230710164414_nv3")]
+    partial class nv3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,21 +33,22 @@ namespace HrProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ArrivalTime")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Absent")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("Bounshour")
+                    b.Property<DateTime?>("ArrivalTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Bounshour")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DepartureTime")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("DepartureTime")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("DiscountHour")
+                    b.Property<int?>("DiscountHour")
                         .HasColumnType("int");
 
                     b.Property<int?>("Emp_Id")
@@ -72,6 +73,9 @@ namespace HrProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("Departments");
@@ -85,7 +89,7 @@ namespace HrProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<TimeSpan>("ArrivalTime")
+                    b.Property<TimeSpan?>("ArrivalTime")
                         .HasColumnType("time");
 
                     b.Property<DateTime?>("BirthDate")
@@ -110,6 +114,9 @@ namespace HrProject.Migrations
 
                     b.Property<DateTime?>("HireDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelelted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");

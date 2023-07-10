@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HrProject.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class nv1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -200,9 +200,10 @@ namespace HrProject.Migrations
                     Salary = table.Column<double>(type: "float", nullable: false),
                     HireDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     BirthDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ArrivalTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    ArrivalTime = table.Column<TimeSpan>(type: "time", nullable: true),
                     LeaveTime = table.Column<TimeSpan>(type: "time", nullable: true),
-                    Departmentid = table.Column<int>(type: "int", nullable: false)
+                    Departmentid = table.Column<int>(type: "int", nullable: false),
+                    IsDelelted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -240,10 +241,11 @@ namespace HrProject.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ArrivalTime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DepartureTime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Bounshour = table.Column<int>(type: "int", nullable: false),
-                    DiscountHour = table.Column<int>(type: "int", nullable: false),
+                    ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DepartureTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Absent = table.Column<bool>(type: "bit", nullable: false),
+                    Bounshour = table.Column<int>(type: "int", nullable: true),
+                    DiscountHour = table.Column<int>(type: "int", nullable: true),
                     Emp_Id = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

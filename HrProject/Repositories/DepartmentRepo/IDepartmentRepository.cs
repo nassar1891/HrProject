@@ -6,5 +6,9 @@ namespace HrProject.Repositories.DepartmentRepo
     {
         Department GetDepartmentById(int id);
         public List<Department> GetAllDepartments();
+        Department GetDepartmentByName(string name);
+        void Insert(Department department);
+        void Update(int id, Department department);
+        void Delete(int id);
     }
 }

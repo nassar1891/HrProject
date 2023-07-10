@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrProject.Migrations
 {
     [DbContext(typeof(HrContext))]
-    [Migration("20230706025041_ah2")]
-    partial class ah2
+    [Migration("20230710151435_nv2")]
+    partial class nv2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,19 +36,19 @@ namespace HrProject.Migrations
                     b.Property<bool>("Absent")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ArrivalTime")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("ArrivalTime")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("Bounshour")
+                    b.Property<int?>("Bounshour")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DepartureTime")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("DepartureTime")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("DiscountHour")
+                    b.Property<int?>("DiscountHour")
                         .HasColumnType("int");
 
                     b.Property<int?>("Emp_Id")
@@ -72,6 +72,9 @@ namespace HrProject.Migrations
                     b.Property<string>("DeptName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -111,6 +114,9 @@ namespace HrProject.Migrations
 
                     b.Property<DateTime?>("HireDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelelted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");

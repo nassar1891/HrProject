@@ -5,14 +5,14 @@
 namespace HrProject.Migrations
 {
     /// <inheritdoc />
-    public partial class nv3 : Migration
+    public partial class nv2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<bool>(
-                name: "IsDelelted",
-                table: "Employees",
+                name: "IsDeleted",
+                table: "Departments",
                 type: "bit",
                 nullable: false,
                 defaultValue: false);
@@ -22,8 +22,8 @@ namespace HrProject.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "IsDelelted",
-                table: "Employees");
+                name: "IsDeleted",
+                table: "Departments");
         }
     }
 }

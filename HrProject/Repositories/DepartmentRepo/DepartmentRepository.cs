@@ -18,7 +18,36 @@ namespace HrProject.Repositories.DepartmentRepo
 
         public Department GetDepartmentById(int id)
         {
-            return context.Departments.Include(e => e.DeptName).FirstOrDefault(emp => emp.Id == id);
+            return context.Departments.Include(d => d.DeptName).FirstOrDefault(dep => dep.Id == id);
+        }
+        public Department GetDepartmentByName(string name)
+        {
+            return context.Departments.Include(d => d.DeptName).FirstOrDefault(dep => dep.DeptName == name);
+
+        }
+
+        public void Insert(Department department)
+        {
+            context.Departments.Add(department);
+            context.SaveChanges();
+        }
+        public void Update(int id, Department department)
+        {
+            Department existingDepartment = context.Departments.FirstOrDefault(d => d.Id == id);
+            if (existingDepartment != null)
+            {
+                existingDepartment.DeptName = department.DeptName;
+                context.SaveChanges();
+            }
+        }
+        public void Delete(int id)
+        {
+            Department oldDepartment = GetDepartmentById(id);
+            if (oldDepartment != null)
+            {
+                oldDepartment.IsDeleted = true;
+                context.SaveChanges();
+            }
         }
     }
 }
