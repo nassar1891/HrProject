@@ -15,7 +15,7 @@
 					<h5 class="mb-0">Required Data</h5>
 				</div>
 				<div class="card-body">
-                    <form asp-action="Create">
+                    <form asp-action="Create" onsubmit="return validateForm()">
                         <div class="form-group">
                             <label asp-for="FirstName" class="control-label"></label>
                             <input asp-for="FirstName" class="form-control" />
@@ -87,6 +87,7 @@
                         <div class="form-group">
                             <label asp-for="Department" class="control-label"></label>
                             @Html.DropDownList("DepartmentList", null, "-- Select Department --", new { @class = "form-control" })
+                            <span asp-validation-for="Department" class="text-danger"></span>
                         </div>
 
                         <div class="form-group mt-3">
@@ -110,6 +111,37 @@
 	<script src="/lib/jquery/dist/jquery.min.js"></script>
 	<script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 	<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#salaryReport").dataTable();
+        })
+
+        function validateForm() {
+            var birthDate = document.getElementById('BirthDate').value;
+            var hireDate = document.getElementById('HireDate').value;
+
+            // Validate BirthDate
+            var birthDateObj = new Date(birthDate);
+            var currentDate = new Date();
+            var minimumBirthDate = new Date(currentDate.getFullYear() - 20, currentDate.getMonth(), currentDate.getDate());
+
+            if (birthDateObj > minimumBirthDate) {
+                alert('You must be at least 20 years old.');
+                return false; // Prevent form submission
+            }
+
+            // Validate HireDate
+            var hireDateObj = new Date(hireDate);
+            var minimumHireDate = new Date(2010, 0, 1); // Minimum hire date: January 1, 2010
+
+            if (hireDateObj < minimumHireDate) {
+                alert('Please select a hire date after 2010.');
+                return false; // Prevent form submission
+            }
+
+            return true; // Allow form submission
+        }
+    </script>
 }
 
     <style>

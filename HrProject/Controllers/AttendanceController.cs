@@ -1,10 +1,13 @@
-﻿using HrProject.Models;
+﻿using HrProject.Global;
+using HrProject.Models;
 using HrProject.Repositories.AttendanceRepository;
 using HrProject.Repositories.EmployeeRepo;
 using HrProject.Repositories.GeneralSettingRepo;
 using HrProject.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using System.Security.Claims;
 
 namespace HrProject.Controllers
 {
@@ -21,6 +24,8 @@ namespace HrProject.Controllers
 		}
 
 		#region New Attendance
+
+		[Authorize(Permissions.Attendance.View)]
 		public IActionResult Index()
 		{
 			ViewData["Employees"] = employeeRepo.GetAllEmployees();
@@ -29,6 +34,7 @@ namespace HrProject.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Permissions.Attendance.Add)]
 		public IActionResult AddAttendance()
 		{
 			ViewBag.Employees = employeeRepo.GetAllEmployees();
@@ -38,6 +44,7 @@ namespace HrProject.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Authorize(Permissions.Attendance.Add)]
 		public IActionResult AddAttendance(int id, AttendanceViewModel attendance)
 		{
 			if (ModelState.IsValid == true)
@@ -89,6 +96,7 @@ namespace HrProject.Controllers
 			return View("Index", allAttendances);
 		}
 
+		[Authorize(Permissions.Attendance.Delete)]
 		public IActionResult Delete(int id)
 		{
 			attendanceRepo.Delete(id);

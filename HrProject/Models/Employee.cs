@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HrProject.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -26,6 +27,7 @@ public class Employee
 
     public double Salary { get; set; }
 
+    [HireDate]
     public DateTime? HireDate { get; set; }
 
     public DateTime? BirthDate { get; set; }

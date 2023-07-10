@@ -13,10 +13,11 @@ namespace HrProject.Repositories.AttendanceRepository
         Attendance GetById(int? id,DateTime todayDate);
         void Update(int id, Attendance attendance);
 
+        int AttendanceDays(int? empId,DateTime targetDate);
         int AttendanceDays(int? empId);
 
-        decimal? OverHoursSum(int empId);
-        decimal? DiscountHoursSum(int empId);
+        decimal? OverHoursSum(int? empId);
+        decimal? DiscountHoursSum(int? empId);
 
         //int GetArrivalTime(int empId);
 
