@@ -56,6 +56,7 @@ namespace HrProject.Controllers
                 Text = x.DeptName,
                 Value = x.Id.ToString()
             });
+            ViewBag.Cities = new List<string> { "Cairo", "Alexandria", "Giza", "Tanta", "Damanhour", "Menoufia", "Mansoura", "Qena", "Luxor", "Aswan", "Other"};
 
             return View();
         }

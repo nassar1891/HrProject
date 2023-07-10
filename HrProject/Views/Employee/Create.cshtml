@@ -33,7 +33,7 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="City" class="control-label"></label>
-                            <input asp-for="City" class="form-control" />
+                            @Html.DropDownList("Cities", null, "-- Select City --", new { @class = "form-control" })
                             <span asp-validation-for="City" class="text-danger"></span>
                         </div>
                         <div class="form-group">

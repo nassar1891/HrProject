@@ -47,6 +47,7 @@ namespace HrProject.ViewModels
 		public TimeSpan? LeaveTime { get; set; }
         public string Department { get; set; }
 
-        
     }
 }
+    
+
