@@ -1,9 +1,11 @@
-﻿using HrProject.Models;
+﻿using HrProject.Global;
+using HrProject.Models;
 using HrProject.Repositories.AttendanceRepository;
 using HrProject.Repositories.EmployeeRepo;
 using HrProject.Repositories.GeneralSettingRepo;
 using HrProject.Repositories.HolidayRepo;
 using HrProject.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -26,69 +28,70 @@ namespace HrProject.Controllers
             this.attendanceRepo = attendanceRepo;
         }
 
-   //     [HttpPost]
-   //     public IActionResult AllReports(DateTime targetDate)
-   //     {
-			//DateTime minimumDate = new DateTime(2010, 1, 1);
+        //     [HttpPost]
+        //     public IActionResult AllReports(DateTime targetDate)
+        //     {
+        //DateTime minimumDate = new DateTime(2010, 1, 1);
 
-			//if (targetDate < minimumDate)
-			//{
-			//	ModelState.AddModelError("targetDate", "Please select a date after January 2010.");
-			//}
+        //if (targetDate < minimumDate)
+        //{
+        //	ModelState.AddModelError("targetDate", "Please select a date after January 2010.");
+        //}
 
-			//List<SalaryReportAttendanceVM> salaryReportAttendanceVMs = new List<SalaryReportAttendanceVM>();
+        //List<SalaryReportAttendanceVM> salaryReportAttendanceVMs = new List<SalaryReportAttendanceVM>();
 
-   //         var attendanceList = attendanceRepo.GetAll();
-
-
-   //         foreach (var attendance in attendanceList)
-   //         {
-   //             SalaryReportAttendanceVM SalaryReportVM = new SalaryReportAttendanceVM();
-
-   //             int? totalOverTimeHours = 0;
-   //             int? totalDiscountTimeHours = 0;
-
-   //             //var attendanceListForEmployee = attendanceRepo.GetAllAttendanceByEmployee(attendance.Emp_Id, attendance.Date);
-   //             var attendanceListForEmployee = attendanceRepo.GetAllAttendanceByEmployee(attendance.Emp_Id, targetDate);
-   //             foreach (var item in attendanceListForEmployee)
-   //             {
-   //                 if (item.Bounshour != null)
-   //                     totalOverTimeHours += item.Bounshour;
-   //                 if (item.DiscountHour != null)
-   //                     totalDiscountTimeHours += item.DiscountHour;
-   //             }
-
-   //             var month = attendance.Date.Month;
-   //             var year = attendance.Date.Year;
-   //             int attendanceDays = attendanceRepo.AttendanceDays(attendance.Emp_Id, targetDate);
-   //             double SalaryPerDay = employeeRepo.GetSalary(attendance.Emp_Id) / DateTime.DaysInMonth(year, month);
-   //             int Holidays = (weeklyHolidayRepo.GetAllHolidays().Select(x => x.Holiday).Count()) * 4;
-   //             int absentDays = DateTime.DaysInMonth(year, month) - (Holidays + attendanceDays);
+        //         var attendanceList = attendanceRepo.GetAll();
 
 
-   //             int overTimePricePerHour = generalSettingRepo.OverTimePricePerHour();
-   //             int discountTimePricePerHour = generalSettingRepo.DiscountTimePricePerHour();
+        //         foreach (var attendance in attendanceList)
+        //         {
+        //             SalaryReportAttendanceVM SalaryReportVM = new SalaryReportAttendanceVM();
+
+        //             int? totalOverTimeHours = 0;
+        //             int? totalDiscountTimeHours = 0;
+
+        //             //var attendanceListForEmployee = attendanceRepo.GetAllAttendanceByEmployee(attendance.Emp_Id, attendance.Date);
+        //             var attendanceListForEmployee = attendanceRepo.GetAllAttendanceByEmployee(attendance.Emp_Id, targetDate);
+        //             foreach (var item in attendanceListForEmployee)
+        //             {
+        //                 if (item.Bounshour != null)
+        //                     totalOverTimeHours += item.Bounshour;
+        //                 if (item.DiscountHour != null)
+        //                     totalDiscountTimeHours += item.DiscountHour;
+        //             }
+
+        //             var month = attendance.Date.Month;
+        //             var year = attendance.Date.Year;
+        //             int attendanceDays = attendanceRepo.AttendanceDays(attendance.Emp_Id, targetDate);
+        //             double SalaryPerDay = employeeRepo.GetSalary(attendance.Emp_Id) / DateTime.DaysInMonth(year, month);
+        //             int Holidays = (weeklyHolidayRepo.GetAllHolidays().Select(x => x.Holiday).Count()) * 4;
+        //             int absentDays = DateTime.DaysInMonth(year, month) - (Holidays + attendanceDays);
 
 
-   //             var employee = employeeRepo.GetEmployeeById(attendance.Emp_Id);
-   //             SalaryReportVM.EmpName = $"{employee.FirstName} {employee.LastName}";
-   //             SalaryReportVM.DeptName = employee.Department.DeptName;
-   //             SalaryReportVM.Salary = employee.Salary;
-   //             SalaryReportVM.AttendanceDays = attendanceDays;
-   //             SalaryReportVM.AbsentDays = absentDays;
-   //             SalaryReportVM.OverTimePrice = (double)(overTimePricePerHour * totalOverTimeHours);
-   //             SalaryReportVM.DeductionTimePrice = (double)(discountTimePricePerHour * totalDiscountTimeHours);
-   //             SalaryReportVM.total = employee.Salary + (double)(overTimePricePerHour * totalOverTimeHours) - ((double)(discountTimePricePerHour * totalDiscountTimeHours) + (absentDays * SalaryPerDay));
+        //             int overTimePricePerHour = generalSettingRepo.OverTimePricePerHour();
+        //             int discountTimePricePerHour = generalSettingRepo.DiscountTimePricePerHour();
 
 
-   //             salaryReportAttendanceVMs.Add(SalaryReportVM);
-   //         }
-   //         ViewData["Employees"] = employeeRepo.GetAllEmployees();
-   //         return View(salaryReportAttendanceVMs.DistinctBy(n => n.EmpName).ToList());
-   //     }
+        //             var employee = employeeRepo.GetEmployeeById(attendance.Emp_Id);
+        //             SalaryReportVM.EmpName = $"{employee.FirstName} {employee.LastName}";
+        //             SalaryReportVM.DeptName = employee.Department.DeptName;
+        //             SalaryReportVM.Salary = employee.Salary;
+        //             SalaryReportVM.AttendanceDays = attendanceDays;
+        //             SalaryReportVM.AbsentDays = absentDays;
+        //             SalaryReportVM.OverTimePrice = (double)(overTimePricePerHour * totalOverTimeHours);
+        //             SalaryReportVM.DeductionTimePrice = (double)(discountTimePricePerHour * totalDiscountTimeHours);
+        //             SalaryReportVM.total = employee.Salary + (double)(overTimePricePerHour * totalOverTimeHours) - ((double)(discountTimePricePerHour * totalDiscountTimeHours) + (absentDays * SalaryPerDay));
 
 
-		//[HttpPost]
+        //             salaryReportAttendanceVMs.Add(SalaryReportVM);
+        //         }
+        //         ViewData["Employees"] = employeeRepo.GetAllEmployees();
+        //         return View(salaryReportAttendanceVMs.DistinctBy(n => n.EmpName).ToList());
+        //     }
+
+
+        //[HttpPost]
+        [Authorize(Permissions.Salary.View)]
 		public IActionResult AllReports()
 		{
             ViewData["Employees"] = employeeRepo.GetAllEmployees();
@@ -145,8 +148,8 @@ namespace HrProject.Controllers
 			//return View(salaryReportAttendanceVMs.DistinctBy(n => n.EmpName).ToList());
 		}
 
-
-		public IActionResult Index(int empId, DateTime targetDate)
+        [Authorize(Permissions.Salary.View)]
+		public IActionResult Index(int? empId, DateTime targetDate)
         {
 			DateTime minimumDate = new DateTime(2008, 1, 1);
 

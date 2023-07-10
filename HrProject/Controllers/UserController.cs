@@ -25,14 +25,15 @@ namespace HrProject.Controllers
         }
 
         [HttpGet]
-        [Authorize(Permissions.Employee.View)]
+        [Authorize(Permissions.Permission.View)]
         public async Task<IActionResult> Index()
         {
             var allUsers = await userRepository.GetAllUsers();
             return View(allUsers);
         }
-        
-        public async Task<IActionResult> AddUser()
+
+		[Authorize(Permissions.Permission.Add)]
+		public async Task<IActionResult> AddUser()
         {
             var groupRoles = await groupRepository.GetRolesAsync();
             ViewData["groupRoles"] = groupRoles;
@@ -41,6 +42,7 @@ namespace HrProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Permissions.Permission.Add)]
         public async Task<IActionResult> AddUser(UserViewModel model)
         {
             if (!ModelState.IsValid)
@@ -71,6 +73,7 @@ namespace HrProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Permissions.Permission.Edit)]
         public async Task<IActionResult> Edit(string id)
         {
             var groupRoles = await groupRepository.GetRolesAsync();
@@ -97,7 +100,8 @@ namespace HrProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(UserViewModel model)
+		[Authorize(Permissions.Permission.Edit)]
+		public async Task<IActionResult> Edit(UserViewModel model)
         {
             var groupRoles = await groupRepository.GetRolesAsync();
             ViewData["groupRoles"] = groupRoles;
@@ -122,6 +126,7 @@ namespace HrProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Permissions.Permission.Delete)]
         public async Task<IActionResult> Delete(string id)
         {
             await userRepository.DeleteAsync(id);

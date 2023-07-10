@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using static HrProject.Global.Permissions;
 using System.Diagnostics.Metrics;
 using HrProject.Repositories.DepartmentRepo;
 using HrProject.ViewModels;
