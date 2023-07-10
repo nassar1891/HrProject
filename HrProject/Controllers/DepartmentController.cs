@@ -66,7 +66,7 @@ namespace HrProject.Controllers
             {
                 DeptName = collection.FirstOrDefault(x => x.Key == "DeptName").Value,
             };
-            _departmentRepository.Insert(newdep);
+			_departmentRepository.Insert(newdep);
 
             return RedirectToAction("Index");
         }
@@ -104,25 +104,25 @@ namespace HrProject.Controllers
         }
 
         // GET: EmployeeController/Delete/5
-        [Authorize(Permissions.Department.Delete)]
-        public ActionResult Delete(int id)
-        {
-            var dep = _departmentRepository.GetDepartmentById(id);
-            var departments = _departmentRepository.GetAllDepartments();
-            ViewBag.DepartmentList = departments.Select(x => new SelectListItem
-            {
-                Text = x.DeptName,
-                Value = x.Id.ToString(),
-                Selected = x.Id == dep.Id
-            });
-            return View(dep);
-        }
+        //[Authorize(Permissions.Department.Delete)]
+        //public ActionResult Delete(int id)
+        //{
+        //    var dep = _departmentRepository.GetDepartmentById(id);
+        //    var departments = _departmentRepository.GetAllDepartments();
+        //    ViewBag.DepartmentList = departments.Select(x => new SelectListItem
+        //    {
+        //        Text = x.DeptName,
+        //        Value = x.Id.ToString(),
+        //        Selected = x.Id == dep.Id
+        //    });
+        //    return View(dep);
+        //}
 
         // POST: EmployeeController/Delete/5
-        [HttpPost]
+        //[HttpPost]
         [ValidateAntiForgeryToken]
 		[Authorize(Permissions.Department.Delete)]
-		public ActionResult Delete(int id, IFormCollection collection)
+		public ActionResult Delete(int id)
         {
             _departmentRepository.Delete(id);
             return RedirectToAction(nameof(Index));

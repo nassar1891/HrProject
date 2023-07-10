@@ -9,7 +9,7 @@
 	<hr />
     <h5 class="mb-4">
         <a class="float-end d-inline" asp-action="Create">
-            <button id="addRow" class="btn btn-dark mb-4"><i class="bi bi-person-fill-add me-1"></i> Add Employee</button>
+            <button id="addRow" class="btn btn-dark mb-4"><i class="bi bi-building-fill"></i> Add Department</button>
         </a>
     </h5>
 
@@ -25,10 +25,10 @@
 			{
 				<tr>
 					<td>@item.DeptName</td>
-					<td>
-                        <a class="badge bg-label-success me-1" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i> </a>
-                        <a class="badge bg-label-primary me-1" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-eye"></i></a>
-                        <a class="badge bg-label-danger me-1" asp-action="Delete" asp-route-id="@item.Id" onclick="confirmDelete()"><i class="bi bi-trash"> </i></a>
+					<td class="text-center">
+                        <a class="badge bg-label-success me-1" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i> Edit</a>
+                        <a class="badge bg-label-primary me-1" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-eye"></i> Details</a>
+                        <a class="badge bg-label-danger me-1" asp-action="Delete" asp-route-id="@item.Id" onclick="confirmDelete()"><i class="bi bi-trash"> Delete</i></a>
 					</td>
 				</tr>
 			}
@@ -43,7 +43,7 @@
 @section Scripts{
 	<script>
 		function confirmDelete() {
-			var confirmMsg = confirm("Are you sure you want to Delete this Employee?!");
+			var confirmMsg = confirm("Are you sure you want to Delete this Deoartment?!");
 			if (!confirmMsg) {
 				event.preventDefault();
 			}

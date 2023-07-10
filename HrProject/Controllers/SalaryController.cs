@@ -7,6 +7,7 @@ using HrProject.Repositories.HolidayRepo;
 using HrProject.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using HrProject.Attributes;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -28,6 +29,7 @@ namespace HrProject.Controllers
 			this.attendanceRepo = attendanceRepo;
 		}
 
+		//[UnAuthoritizeCustomeAttriibute(Permissions.Salary.View)]
 		[Authorize(Permissions.Salary.View)]
 		public IActionResult AllReports()
 		{
@@ -80,7 +82,14 @@ namespace HrProject.Controllers
 				SalaryReportVM.DeptName = employee.Department.DeptName;
 				SalaryReportVM.Salary = employee.Salary;
 				SalaryReportVM.AttendanceDays = attendanceDays;
-				SalaryReportVM.AbsentDays = absentDays;
+				if (attendanceDays == 0)
+				{
+					SalaryReportVM.AbsentDays = 0;
+				}
+				else
+				{
+					SalaryReportVM.AbsentDays = absentDays;
+				}
 				SalaryReportVM.OverTimePrice = (double)(overTimePricePerHour * totalOverTimeHours);
 				SalaryReportVM.DeductionTimePrice = (double)(discountTimePricePerHour * totalDiscountTimeHours);
 				if (attendanceDays == 0)
@@ -88,7 +97,7 @@ namespace HrProject.Controllers
 					SalaryReportVM.total = 0;
 				}
 				else
-				{ 
+				{
 					SalaryReportVM.total = employee.Salary + (double)(overTimePricePerHour * totalOverTimeHours) - ((double)(discountTimePricePerHour * totalDiscountTimeHours) + (absentDays * SalaryPerDay));
 				}
 
@@ -143,7 +152,14 @@ namespace HrProject.Controllers
 			SalaryReportVM.DeptName = employee.Department.DeptName;
 			SalaryReportVM.Salary = employee.Salary;
 			SalaryReportVM.AttendanceDays = attendanceDays;
-			SalaryReportVM.AbsentDays = absentDays;
+			if (attendanceDays == 0)
+			{
+				SalaryReportVM.AbsentDays = 0;
+			}
+			else
+			{
+				SalaryReportVM.AbsentDays = absentDays;
+			}
 			SalaryReportVM.OverTimePrice = (double)(overTimePricePerHour * totalOverTimeHours);
 			SalaryReportVM.DeductionTimePrice = (double)(discountTimePricePerHour * totalDiscountTimeHours);
 			if (attendanceDays == 0)
@@ -160,8 +176,8 @@ namespace HrProject.Controllers
 			// }
 			return View("Index", SalaryReportVM);
 		}
-		
-		
+
+
 		//      [Authorize(Permissions.Salary.View)]
 		//public IActionResult AllReports()
 		//{

@@ -73,8 +73,8 @@ namespace HrProject
 				pattern: "{controller=Account}/{action=Login}/{id?}");
 
 			DataInitilizer.Configure(app);
-
-			app.Run();
+            app.UseStatusCodePagesWithReExecute("/Error/NotAllowed");
+            app.Run();
 		}
 	}
 }

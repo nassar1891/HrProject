@@ -10,10 +10,10 @@ namespace HrProject.Repositories.DepartmentRepo
         {
             this.context = context;
         }
-        
+
         public List<Department> GetAllDepartments()
         {
-            return context.Departments.ToList();
+            return context.Departments.Where(n => n.IsDeleted == false).ToList();
         }
 
         public Department GetDepartmentById(int id)
@@ -45,7 +45,7 @@ namespace HrProject.Repositories.DepartmentRepo
             Department oldDepartment = GetDepartmentById(id);
             if (oldDepartment != null)
             {
-                //oldDepartment.IsDeleted = true;
+                oldDepartment.IsDeleted = true;
                 context.SaveChanges();
             }
         }
