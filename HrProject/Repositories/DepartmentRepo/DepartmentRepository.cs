@@ -18,11 +18,11 @@ namespace HrProject.Repositories.DepartmentRepo
 
         public Department GetDepartmentById(int id)
         {
-            return context.Departments.Include(d => d.DeptName).FirstOrDefault(dep => dep.Id == id);
+            return context.Departments.FirstOrDefault(dep => dep.Id == id);
         }
         public Department GetDepartmentByName(string name)
         {
-            return context.Departments.Include(d => d.DeptName).FirstOrDefault(dep => dep.DeptName == name);
+            return context.Departments.Include(dep => dep.DeptName).FirstOrDefault(dep => dep.DeptName == name);
 
         }
 
@@ -45,7 +45,7 @@ namespace HrProject.Repositories.DepartmentRepo
             Department oldDepartment = GetDepartmentById(id);
             if (oldDepartment != null)
             {
-                oldDepartment.IsDeleted = true;
+                //oldDepartment.IsDeleted = true;
                 context.SaveChanges();
             }
         }
