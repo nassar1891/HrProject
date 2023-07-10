@@ -19,6 +19,9 @@ namespace HrProject.Controllers
 			this.generalSettingRepository = generalSettingRepository;
 			this.weeklyHolidayRepository = weeklyHolidayRepository;
 		}
+
+
+		[Authorize(Permissions.GeneralSetting.View)]
         public IActionResult Index()
 		{
 			var generalVM = new GeneralSettingViewModel();

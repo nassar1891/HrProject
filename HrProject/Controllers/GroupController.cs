@@ -18,6 +18,8 @@ namespace HrProject.Controllers
 			this.groupRepository = groupRepository;
 			this.roleManager = roleManager;
 		}
+
+
 		[HttpGet]
 		[Authorize(Permissions.Permission.View)]
 		public async Task<IActionResult> Index()
@@ -25,6 +27,8 @@ namespace HrProject.Controllers
 			var allRoles = await groupRepository.GetRolesAsync();
 			return View(allRoles);
 		}
+
+
 		[HttpGet]
 		[Authorize(Permissions.Permission.Add)]
 		public IActionResult AddGroup()

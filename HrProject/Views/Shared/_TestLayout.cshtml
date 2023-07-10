@@ -69,56 +69,76 @@
 					<li class="menu-header small text-uppercase">
 						<span class="menu-header-text">Pages</span>
 					</li>
-					<li class="menu-item">
-						<a asp-action="Index" asp-controller="Employee" class="menu-link">
-							<i class="bi bi-people-fill"></i>
-							<div data-i18n="Basic" class="ms-1">Employees</div>
-						</a>
-					</li>
 
-					<li class="menu-item">
-						<a asp-action="Index" asp-controller="Attendance" class="menu-link">
-							<i class="bi bi-journal-check"></i> 
-							<div data-i18n="Basic" class="ms-1">Attendace</div>
-						</a>
-					</li>
+					@if (AuthorizationService.AuthorizeAsync(User, Permissions.Employee.View).Result.Succeeded)
+					{
+						<li class="menu-item">
+							<a asp-action="Index" asp-controller="Employee" class="menu-link">
+								<i class="bi bi-people-fill"></i>
+								<div data-i18n="Basic" class="ms-1">Employees</div>
+							</a>
+						</li>
+					}
 
-					<li class="menu-item">
-						<a asp-action="AllReports" asp-controller="Salary" class="menu-link">
-							<i class="bi bi-currency-dollar"></i>
-							<div data-i18n="Basic" class="ms-1">Salary</div>
-						</a>
-					</li>
-					
+					@if (AuthorizationService.AuthorizeAsync(User, Permissions.Attendance.View).Result.Succeeded)
+					{
+						<li class="menu-item">
+							<a asp-action="Index" asp-controller="Attendance" class="menu-link">
+								<i class="bi bi-journal-check"></i>
+								<div data-i18n="Basic" class="ms-1">Attendace</div>
+							</a>
+						</li>
+					}
+
+					@if (AuthorizationService.AuthorizeAsync(User, Permissions.Salary.View).Result.Succeeded)
+					{
+						<li class="menu-item">
+							<a asp-action="AllReports" asp-controller="Salary" class="menu-link">
+								<i class="bi bi-currency-dollar"></i>
+								<div data-i18n="Basic" class="ms-1">Salary</div>
+							</a>
+						</li>
+					}
+
 					<li class="menu-item">
 						<a href="javascript:void(0);" class="menu-link menu-toggle">
 							<i class="menu-icon tf-icons bx bx-dock-top"></i>
 							<div data-i18n="Account Settings">Account Settings</div>
 						</a>
 						<ul class="menu-sub">
-							<li class="menu-item">
-								<a asp-action="Index" asp-controller="User" class="menu-link">
-									<div data-i18n="Account">Users</div>
-								</a>
-							</li>
-							<li class="menu-item">
-								<a asp-action="AddUser" asp-controller="User" class="menu-link">
-									<div data-i18n="Notifications">New User</div>
-								</a>
-							</li>
+
+							@if (AuthorizationService.AuthorizeAsync(User, Permissions.Permission.View).Result.Succeeded)
+							{
+								<li class="menu-item">
+									<a asp-action="Index" asp-controller="User" class="menu-link">
+										<div data-i18n="Account"><i class="bi bi-people-fill"></i> Users</div>
+									</a>
+								</li>
+							}
+
+							@if (AuthorizationService.AuthorizeAsync(User, Permissions.Permission.Add).Result.Succeeded)
+							{
+								<li class="menu-item">
+									<a asp-action="AddUser" asp-controller="User" class="menu-link">
+										<div data-i18n="Notifications"><i class="bi bi-person-plus-fill"></i> New User</div>
+									</a>
+								</li>
+							}
+
 							@if (AuthorizationService.AuthorizeAsync(User, Permissions.Permission.View).Result.Succeeded)
 							{
 								<li class="menu-item">
 									<a asp-action="Index" asp-controller="Group" class="menu-link">
-										<div data-i18n="Connections">Groups</div>
+										<div data-i18n="Connections"><i class="bi bi-people-fill"></i> Groups</div>
 									</a>
 								</li>
 							}
+
 							@if (AuthorizationService.AuthorizeAsync(User, Permissions.Permission.Add).Result.Succeeded)
 							{
 								<li class="menu-item">
 									<a asp-action="AddGroup" asp-controller="Group" class="menu-link">
-										<div data-i18n="Connections">New Group</div>
+										<div data-i18n="Connections"><i class="bi bi-person-plus-fill"></i> New Group</div>
 									</a>
 								</li>
 							}
@@ -126,27 +146,30 @@
 							{
 								<li class="menu-item">
 									<a asp-action="Index" asp-controller="GeneralSetting" class="menu-link">
-										<div data-i18n="Connections">General Settings</div>
+										<div data-i18n="Connections"><i class="bi bi-gear"></i> General Settings</div>
 									</a>
 								</li>
 							}
 
 						</ul>
 					</li>
-					<li class="menu-item">
-						<a href="javascript:void(0);" class="menu-link menu-toggle">
-							<i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-							<div data-i18n="Authentications">Authentications</div>
-						</a>
-						<ul class="menu-sub">
-							<li class="menu-item">
-								<a asp-action="Login" asp-controller="Account" class="menu-link" target="_blank">
-									<div data-i18n="Basic">Login</div>
-								</a>
-							</li>
-							
-						</ul>
-					</li>
+					@if (User.Identity.IsAuthenticated)
+					{
+						<li class="menu-item">
+							<a href="javascript:void(0);" class="menu-link menu-toggle">
+								<i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+								<div data-i18n="Authentications">Authentications</div>
+							</a>
+							<ul class="menu-sub">
+								<li class="menu-item">
+									<a asp-action="Login" asp-controller="Account" class="menu-link" target="_blank">
+										<div data-i18n="Basic"><i class="bi bi-box-arrow-in-left"></i> Login</div>
+									</a>
+								</li>
+
+							</ul>
+						</li>
+					}
 			</aside>
 			<!-- / Menu -->
 			<!-- Layout container -->
