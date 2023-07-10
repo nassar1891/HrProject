@@ -34,9 +34,14 @@ namespace HrProject.ViewModels
         [Range(5000,50000,ErrorMessage ="Salary Must Be between 5000 and 50000")]
         public double Salary { get; set; }
 
+        //[Range(typeof(DateTime), "1/1/2008", "1/1/2050", ErrorMessage = "Date Must be After 2008")]
         [HireDate]
+        [Required]
         public DateTime? HireDate { get; set; }
 
+        //[Range(typeof(DateTime), "1/1/1963", "1/1/2000", ErrorMessage = "Minimun Age is 23")]
+        [HireDate]
+        [Required]
         public DateTime? BirthDate { get; set; }
 
         [Required]
@@ -45,6 +50,8 @@ namespace HrProject.ViewModels
 		[Required]
         [Attendance]
 		public TimeSpan? LeaveTime { get; set; }
+        
+        [Required]
         public string Department { get; set; }
 
         
