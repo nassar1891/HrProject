@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Home Page";
 }
 
 @*<div id="carouselExampleCaptions" class="carousel slide">
@@ -94,22 +94,39 @@
 
     </div>
 </div>*@
+<style>
+	.landing {
+		background-image: url(../../wwwroot/img/hr.jpg);
+		min-height: calc(100vh - 72px);
+	}
 
+	.img-smaller {
+		max-width: 90%;
+		height: auto;
+	}
 
-<div class="landing d-flex justify-content-center align-items-center">
-    <div class="text-center text-light">
-        <h1>Pioneer Solutions</h1>
-        <p class="fs-5  mb-5">
-            It is a good time to develop your business with a company
-        </p>
-        <img src="~/img/hr3.jpeg" class="img-fluid" />
-    </div>
+</style>
+<link rel="stylesheet" href="~/css/LandingPage.css"/>
+<div class="landing d-flex justify-content-center align-items-center container-animation">
+	<div class="text-center text-light">
+        @*<h1 class="special-font">Pioneer Solutions</h1>
+        <p class="fs-5  mb-5 special-font">
+			People Making Technology Work
+		</p>*@
+		@*<img src="~/img/hr3.jpeg" class="img-fluid" />*@
+
+        <img src="~/img/logo.logo.png" class="img-fluid img-smaller" />
+	</div>
 </div>
 
 
-                <style>
-    .landing {
-        background-image: url(../../wwwroot/img/hr.jpg);
-        min-height: calc(100vh - 72px);
-    }
-                </style>
+@*<style>
+	.landing {
+		background-image: url(../../wwwroot/img/hr.jpg);
+		min-height: calc(100vh - 72px);
+	}
+
+	.img-smaller {
+		max-width: 50%;
+		height: auto;
+</style>*@
