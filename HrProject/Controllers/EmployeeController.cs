@@ -146,25 +146,25 @@ namespace HrProject.Controllers
         }
 
         // GET: EmployeeController/Delete/5
-        [Authorize(Permissions.Employee.Delete)]
-        public ActionResult Delete(int id)
-        {
-            var emp = _employeeRepository.GetEmployeeById(id);
-            var departments = _departmentRepository.GetAllDepartments();
-            ViewBag.DepartmentList = departments.Select(x => new SelectListItem
-            {
-                Text = x.DeptName,
-                Value = x.Id.ToString(),
-                Selected = x.Id == emp.Departmentid
-            });
-            return View(emp);
-        }
+        //[Authorize(Permissions.Employee.Delete)]
+        //public ActionResult Delete(int id)
+        //{
+        //    var emp = _employeeRepository.GetEmployeeById(id);
+        //    var departments = _departmentRepository.GetAllDepartments();
+        //    ViewBag.DepartmentList = departments.Select(x => new SelectListItem
+        //    {
+        //        Text = x.DeptName,
+        //        Value = x.Id.ToString(),
+        //        Selected = x.Id == emp.Departmentid
+        //    });
+        //    return View(emp);
+        //}
 
         // POST: EmployeeController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
 		[Authorize(Permissions.Employee.Delete)]
-		public ActionResult Delete(int id, IFormCollection collection)
+		public ActionResult Delete(int id)
         {
             _employeeRepository.Delete(id);
             return RedirectToAction(nameof(Index));

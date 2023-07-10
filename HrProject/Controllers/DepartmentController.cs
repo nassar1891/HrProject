@@ -119,8 +119,6 @@ namespace HrProject.Controllers
         //}
 
         // POST: EmployeeController/Delete/5
-        //[HttpPost]
-        [ValidateAntiForgeryToken]
 		[Authorize(Permissions.Department.Delete)]
 		public ActionResult Delete(int id)
         {
