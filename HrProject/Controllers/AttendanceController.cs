@@ -79,7 +79,7 @@ namespace HrProject.Controllers
 				}
 
 
-				var empAttendance = attendanceRepo.GetById(attendance.EmpId,attendance.Date);
+				var empAttendance = attendanceRepo.GetById(attendance.EmpId, attendance.Date);
 				if (empAttendance != null)
 				{
 					TempData["AlertMessage"] = "This employee has already signed in today.";
@@ -88,13 +88,14 @@ namespace HrProject.Controllers
 				}
 				attendanceRepo.Add(attendance);
 				return RedirectToAction("Index");
-				
+
 			}
 
 			ViewData["Employees"] = employeeRepo.GetAllEmployees();
 			var allAttendances = attendanceRepo.GetAll();
 			return View("Index", allAttendances);
 		}
+
 
 		[Authorize(Permissions.Attendance.Delete)]
 		public IActionResult Delete(int id)
@@ -103,105 +104,23 @@ namespace HrProject.Controllers
 			return RedirectToAction("Index");
 		}
 
-		//public IActionResult Check(DateTime ArrivalTime,DateTime DepartureTime)
+		//public IActionResult Search(string employeeName)
 		//{
-		//	if (DepartureTime > ArrivalTime)
+		//	if (!string.IsNullOrEmpty(employeeName))
 		//	{
-		//		return Json(true);
+		//		var allEmpAlltendance = attendanceRepo.GetAllAttendanceByEmployeeName(employeeName);
+		//		return View(allEmpAlltendance);
 		//	}
-		//	return Json(false);
+
 		//}
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult AddAttendance(int id, Attendance attendance)
-        //{
-        //	if (ModelState.IsValid == true)
-        //	{
-        //		if (attendance.DepartureTime != null)
-        //		{
 
-        //			//=============== General Data ==============
-
-        //			var empSalary = employeeRepo.GetSalary(attendance.Emp_Id);
-        //			var startTime = employeeRepo.GetStartTime(attendance.Emp_Id);
-        //			var endTime = employeeRepo.GetLeaveTime(attendance.Emp_Id);
-        //			var originWorkingHours = endTime - startTime;
-
-        //			//============= Actual Data ================
-
-        //			var actualStartTime = int.Parse(attendance.ArrivalTime?.ToString("HH"));
-        //			var actualEndTime = int.Parse(attendance.DepartureTime?.ToString("HH"));
-        //			var actualWorkingHours = actualEndTime - actualStartTime;
-
-        //			//============= Price of Hour from GeneralSetting
-
-        //			var bounsValue = generalSettingRepository.OverTimePricePerHour();
-        //			var discountValue = generalSettingRepository.DiscountTimePricePerHour();
-
-        //			if (actualWorkingHours < originWorkingHours)
-        //			{
-        //				var dicountHours = originWorkingHours - actualWorkingHours;
-        //				attendance.DiscountHour = dicountHours;
-        //			}
-        //			else if (actualWorkingHours > originWorkingHours)
-        //			{
-        //				var bounsHours = actualWorkingHours - originWorkingHours;
-        //				attendance.Bounshour = bounsHours;
-        //			}
-        //		}
-        //		var flag = 0;
-        //		if (attendanceRepo.GetById(id) == null)
-        //		{
-        //			var allAttendance = attendanceRepo.GetAll();
-        //			if (allAttendance != null)
-        //			{
-        //				foreach (var item in allAttendance)
-        //				{
-        //					if (attendance.Emp_Id == item.Emp_Id && attendance.Date == item.Date)
-        //					{
-        //						flag = 1;
-
-        //					}
-        //				}
-        //			}
-        //			if (flag == 0)
-        //			{
-        //				attendanceRepo.Add(attendance);
-        //			}
-        //			else
-        //			{
-        //				ModelState.AddModelError(string.Empty, "This Employee Alredy Attended Today");
-        //				ViewData["Employees"] = employeeRepo.GetAllEmployees();
-        //				return View();
-        //			}
-        //		}
-        //		ViewData["Employees"] = employeeRepo.GetAllEmployees();
-        //		attendanceRepo.Update(id, attendance);
-        //		return RedirectToAction("Index");
-
-        //	}
-
-        //	ViewData["Employees"] = employeeRepo.GetAllEmployees();
-        //	var allAttendances = attendanceRepo.GetAll();
-        //	return View("Index", allAttendances);
-        //}
-
-
-        //[HttpGet]
-        //public IActionResult Edit(int id)
-        //{
-        //	var attendance = attendanceRepo.GetById(id);
-        //	ViewData["Employees"] = employeeRepo.GetAllEmployees();
-        //	return View("AddAttendance");
-        //}
-
-    }
+		#endregion
+	}
 
 
 
 
-	#endregion
 
 
 

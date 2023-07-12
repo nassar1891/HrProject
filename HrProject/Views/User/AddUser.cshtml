@@ -13,10 +13,10 @@
 			<div class="card mb-4">
 				<div class="card-header d-flex align-items-center justify-content-between">
 					<h5 class="mb-0">Required Data</h5>
-					<div asp-validation-summary="All"></div>
 				</div>
 				<div class="card-body">
 					<form asp-action="AddUser">
+					<div asp-validation-summary="All" class="text-danger"></div>
 						<div class="row mb-3">
 							<label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Name</label>
 							<div class="col-sm-10">
@@ -76,6 +76,20 @@
 										   aria-describedby="basic-icon-default-email2" />
 								</div>
 								<span asp-validation-for="Password" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label class="col-sm-2 col-form-label" for="basic-icon-default-email">ConfirmPassword</label>
+							<div class="col-sm-10">
+								<div class="input-group input-group-merge">
+									<span class="input-group-text"><i class="bx bxs-compass"></i></span>
+									<input asp-for="ConfirmPassword"
+										   id="basic-icon-default-email"
+										   class="form-control"
+										   placeholder="Complex Password..."
+										   aria-describedby="basic-icon-default-email2" />
+								</div>
+								<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
 							</div>
 						</div>
 						<div class="row mb-3">

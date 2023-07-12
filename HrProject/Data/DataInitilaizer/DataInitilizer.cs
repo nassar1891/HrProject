@@ -11,7 +11,7 @@ namespace HrProject.Data.DataInitilaizer
 
 		public static async void Configure(IApplicationBuilder app)
 		{
-			// Other configuration code
+			
 
 			// Seed the admin user and role
 			using (var serviceScope = app.ApplicationServices.CreateScope())

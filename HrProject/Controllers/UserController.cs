@@ -93,6 +93,7 @@ namespace HrProject.Controllers
                 UserName = user.UserName,
                 Email = user.Email,
                 Password = user.PasswordHash,
+                ConfirmPassword = user.PasswordHash,
                 GroupName = groupName
             };
             return View(userVM);

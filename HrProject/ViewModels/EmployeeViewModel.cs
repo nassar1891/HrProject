@@ -48,7 +48,7 @@ namespace HrProject.ViewModels
         public TimeSpan? ArrivalTime { get; set; }
 
 		[Required]
-        [Attendance]
+        [AttendanceEmpolyee]
 		public TimeSpan? LeaveTime { get; set; }
         
         [Required]

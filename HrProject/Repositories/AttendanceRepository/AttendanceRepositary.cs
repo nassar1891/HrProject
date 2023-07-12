@@ -66,7 +66,13 @@ namespace HrProject.Repositories.AttendanceRepository
             return emptyAttendanceList;
         }
 
-        public Attendance GetById(int? empId, DateTime todayDate)
+		public List<Attendance> GetAllAttendanceByEmployeeName(string empName)
+		{
+			var allAttendaneList = context.Attendances.Where(e=>e.Employee.FirstName.ToLower().Contains(empName.ToLower())).ToList();
+            return allAttendaneList;
+		}
+
+		public Attendance GetById(int? empId, DateTime todayDate)
         {
             return context.Attendances.FirstOrDefault(n => n.Emp_Id == empId && n.Date.Year == todayDate.Year && n.Date.Month == todayDate.Month && n.Date.Day == todayDate.Day);
         }

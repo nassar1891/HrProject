@@ -35,11 +35,11 @@ namespace HrProject.Controllers
 		{
 			DateTime targetDate = DateTime.Now;
 
-			DateTime minimumDate = new DateTime(2010, 1, 1);
+			DateTime minimumDate = new DateTime(2008, 1, 1);
 
 			if (targetDate < minimumDate)
 			{
-				ModelState.AddModelError("targetDate", "Please select a date after January 2010.");
+				ModelState.AddModelError("targetDate", "Please select a date after January 2008.");
 			}
 
 			List<SalaryReportAttendanceVM> salaryReportAttendanceVMs = new List<SalaryReportAttendanceVM>();

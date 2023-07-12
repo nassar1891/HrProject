@@ -7,7 +7,8 @@ namespace HrProject.ViewModels
 	public class AttendanceViewModel
 	{
 		[Required(ErrorMessage ="Please Choose Date")]
-		[HireDate]
+		//[HireDate]
+		[AttendanceDate]
         public DateTime Date { get; set; }
 
 		[Required(ErrorMessage ="Please Signin")]

@@ -73,6 +73,8 @@ namespace HrProject
 				pattern: "{controller=Account}/{action=Login}/{id?}");
 
 			DataInitilizer.Configure(app);
+
+			// Handling Access Denied Page to Redirect to my custome error page
             app.UseStatusCodePagesWithReExecute("/Error/NotAllowed");
             app.Run();
 		}

@@ -33,7 +33,8 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="City" class="control-label"></label>
-                            @Html.DropDownList("Cities", null, "-- Select City --", new { @class = "form-control" })
+                            <input asp-for="City" class="form-control"/>
+                            @*@Html.DropDownList("Cities", null, "-- Select City --", new { @class = "form-control" })*@
                             <span asp-validation-for="City" class="text-danger"></span>
                         </div>
                         <div class="form-group">
@@ -132,10 +133,10 @@
 
             // Validate HireDate
             var hireDateObj = new Date(hireDate);
-            var minimumHireDate = new Date(2010, 0, 1); // Minimum hire date: January 1, 2010
+            var minimumHireDate = new Date(2008, 0, 1); // Minimum hire date: January 1, 2008
 
             if (hireDateObj < minimumHireDate) {
-                alert('Please select a hire date after 2010.');
+                alert('Please select a hire date after 2008.');
                 return false; // Prevent form submission
             }
 

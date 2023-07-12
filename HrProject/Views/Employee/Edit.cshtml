@@ -128,10 +128,10 @@
 
             // Validate HireDate
             var hireDateObj = new Date(hireDate);
-            var minimumHireDate = new Date(2010, 0, 1); // Minimum hire date: January 1, 2010
+            var minimumHireDate = new Date(2008, 0, 1); // Minimum hire date: January 1, 2010
 
             if (hireDateObj < minimumHireDate) {
-                alert('Please select a hire date after 2010.');
+                alert('Please select a hire date after 2008.');
                 return false; // Prevent form submission
             }
 

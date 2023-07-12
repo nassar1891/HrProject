@@ -8,6 +8,7 @@ namespace HrProject.Repositories.AttendanceRepository
 
         List<Attendance> GetAll();
         List<Attendance> GetAllAttendanceByEmployee(int? empId,DateTime targetDate);
+        List<Attendance> GetAllAttendanceByEmployeeName(string empName);
         void Add(AttendanceViewModel attendance);
         void Delete(int id);
         Attendance GetById(int? id,DateTime todayDate);

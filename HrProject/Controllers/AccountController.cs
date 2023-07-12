@@ -17,7 +17,7 @@ namespace HrProject.Controllers
 			this.userRepository = userRepository;
 			this.signInManager = signInManager;
 		}
-
+		
 		[AllowAnonymous]
 		public async Task<IActionResult> Login()
 		{
