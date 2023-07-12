@@ -55,24 +55,53 @@ namespace HrProject.Repositories.AttendanceRepository
 
         public List<Attendance> GetAll()
         {
-            return context.Attendances.Include(n => n.Employee).Where(n => n.Employee.IsDelelted == false).ToList();
+            return context.Attendances.Include(n => n.Employee).ThenInclude(n=>n.Department).Where(n => n.Employee.IsDelelted == false).ToList();
+        }
+
+        public List<Attendance> GetAllAttendanceByDate(DateTime? targetDate)
+        {
+            var emptyAttendanceList = new List<Attendance>();
+            if (!(targetDate?.Month > DateTime.Now.Month && targetDate?.Year > DateTime.Now.Year))
+                return context.Attendances.Include(n => n.Employee).ThenInclude(n=>n.Department).Where(n => (targetDate == null || n.Date.Year == targetDate.Value.Year) && (targetDate == null || n.Date.Month == targetDate.Value.Month)).ToList();
+            return emptyAttendanceList;
+        }
+
+        public List<Attendance> GetAllAttendanceByDepartmentAndDate(int? deptId, DateTime? targetDate)
+        {
+            var emptyAttendanceList = new List<Attendance>();
+            if (!(targetDate?.Month > DateTime.Now.Month && targetDate?.Year > DateTime.Now.Year))
+                return context.Attendances.Include(n => n.Employee).ThenInclude(n => n.Department).Where(n => n.Employee.Departmentid == deptId && (targetDate == null || n.Date.Year == targetDate.Value.Year) && (targetDate == null || n.Date.Month == targetDate.Value.Month)).ToList();
+            return emptyAttendanceList;
+        }
+
+        public List<Attendance> GetAllAttendanceByDepatment(int? deptId)
+        {
+            return context.Attendances.Include(n => n.Employee).ThenInclude(n=>n.Department).Where(n => n.Employee.Departmentid == deptId).ToList();
         }
 
         public List<Attendance> GetAllAttendanceByEmployee(int? empId, DateTime targetDate)
         {
             var emptyAttendanceList = new List<Attendance>();
             if (!(targetDate.Month > DateTime.Now.Month && targetDate.Year > DateTime.Now.Year))
-                return context.Attendances.Where(n => n.Emp_Id == empId && n.Date.Year == targetDate.Year && n.Date.Month == targetDate.Month).ToList();
+                return context.Attendances.Include(n => n.Employee).ThenInclude(n => n.Department).Where(n => n.Emp_Id == empId && n.Date.Year == targetDate.Year && n.Date.Month == targetDate.Month).ToList();
             return emptyAttendanceList;
         }
 
-		public List<Attendance> GetAllAttendanceByEmployeeName(string empName)
-		{
-			var allAttendaneList = context.Attendances.Where(e=>e.Employee.FirstName.ToLower().Contains(empName.ToLower())).ToList();
-            return allAttendaneList;
-		}
+        public List<Attendance> GetAllAttendanceByEmployeeAndDate(int? empId, DateTime? targetDate)
+        {
+            var emptyAttendanceList = new List<Attendance>();
+            if (!(targetDate?.Month > DateTime.Now.Month && targetDate?.Year > DateTime.Now.Year))
+                return context.Attendances.Include(n => n.Employee).ThenInclude(n => n.Department).Where(n => n.Emp_Id == empId && (targetDate == null || n.Date.Year == targetDate.Value.Year) && (targetDate == null || n.Date.Month == targetDate.Value.Month)).ToList();
+            return emptyAttendanceList;
+        }
 
-		public Attendance GetById(int? empId, DateTime todayDate)
+        public List<Attendance> GetAllAttendanceByEmployeeId(int? empId)
+        {
+            var allAttendaneList = context.Attendances.Include(n => n.Employee).ThenInclude(n=>n.Department).Where(n => n.Emp_Id == empId).ToList();
+            return allAttendaneList;
+        }
+
+        public Attendance GetById(int? empId, DateTime todayDate)
         {
             return context.Attendances.FirstOrDefault(n => n.Emp_Id == empId && n.Date.Year == todayDate.Year && n.Date.Month == todayDate.Month && n.Date.Day == todayDate.Day);
         }

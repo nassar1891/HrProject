@@ -21,6 +21,7 @@ public class HrContext : IdentityDbContext<HrUser>
 
     public virtual DbSet<EmployeeHoliday> EmployeeHolidays { get; set; }
     public virtual DbSet<GeneralSetting> GeneralSettings { get; set; }
+    public virtual DbSet<Vacations> Vacations { get; set; }
 
     #region Old
 

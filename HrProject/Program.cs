@@ -8,6 +8,7 @@ using HrProject.Repositories.GeneralSettingRepo;
 using HrProject.Repositories.GroupRepo;
 using HrProject.Repositories.HolidayRepo;
 using HrProject.Repositories.UserRepository;
+using HrProject.Repositories.VacationsRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +51,7 @@ namespace HrProject
 			builder.Services.AddScoped<IAttendanceRepositary, AttendanceRepositary>();
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+			builder.Services.AddScoped<IVacationsRepository, VacationsRepository>();
 
             var app = builder.Build();
 

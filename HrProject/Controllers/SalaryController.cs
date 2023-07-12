@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using HrProject.Attributes;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using HrProject.Repositories.VacationsRepository;
 
 namespace HrProject.Controllers
 {
@@ -20,10 +21,12 @@ namespace HrProject.Controllers
 		private readonly IGeneralSettingRepository generalSettingRepo;
 		private readonly IAttendanceRepositary attendanceRepo;
 		private readonly IWeeklyHolidayRepository weeklyHolidayRepo;
+		private readonly IVacationsRepository vacationsRepository;
 
-		public SalaryController(IEmployeeRepository employeeRepo, IGeneralSettingRepository generalSettingRepo, IAttendanceRepositary attendanceRepo, IWeeklyHolidayRepository weeklyHolidayRepo)
+		public SalaryController(IEmployeeRepository employeeRepo, IGeneralSettingRepository generalSettingRepo, IAttendanceRepositary attendanceRepo, IWeeklyHolidayRepository weeklyHolidayRepo,IVacationsRepository vacationsRepository)
 		{
 			this.weeklyHolidayRepo = weeklyHolidayRepo;
+			this.vacationsRepository = vacationsRepository;
 			this.employeeRepo = employeeRepo;
 			this.generalSettingRepo = generalSettingRepo;
 			this.attendanceRepo = attendanceRepo;
@@ -64,13 +67,22 @@ namespace HrProject.Controllers
 						totalDiscountTimeHours += item.DiscountHour;
 				}
 
+				var holiday2 = 0;
+				var vacations = vacationsRepository.GetAll();
+				foreach (var item in vacations)
+				{
+					if (targetDate.Month == Convert.ToDateTime(item.Date).Month)
+					{
+						holiday2++;
+					}
+				}
 				var month = attendance.Date.Month;
 				var year = attendance.Date.Year;
 				int attendanceDays = attendanceRepo.AttendanceDays(attendance.Emp_Id, targetDate);
 				//double SalaryPerDay = employeeRepo.GetSalary(attendance.Emp_Id) / DateTime.DaysInMonth(year, month);
 				double SalaryPerDay = employeeRepo.GetSalary(attendance.Emp_Id) / 30;
-				int Holidays = (weeklyHolidayRepo.GetAllHolidays().Select(x => x.Holiday).Count()) * 4;
-				int absentDays = DateTime.DaysInMonth(year, month) - (Holidays + attendanceDays);
+				int Holidays = (weeklyHolidayRepo.GetAllHolidays().Select(x => x.Holiday).Count()) * 4 + (holiday2);
+				int absentDays = /*DateTime.DaysInMonth(year, month)*/ 30 - (Holidays + attendanceDays);
 
 
 				int overTimePricePerHour = generalSettingRepo.OverTimePricePerHour();
@@ -139,11 +151,18 @@ namespace HrProject.Controllers
 
 			var month = targetDate.Month;
 			var year = targetDate.Year;
+			var holidays2 = 0;
+			var vacations = vacationsRepository.GetAll();
+			foreach (var item in vacations)
+			{
+				if(targetDate.Month == Convert.ToDateTime(item.Date).Month)
+					holidays2++;
+			}
 			int attendanceDays = attendanceRepo.AttendanceDays(empId, targetDate);
 			//double SalaryPerDay = employeeRepo.GetSalary(empId) / DateTime.DaysInMonth(year, month);
 			double SalaryPerDay = employeeRepo.GetSalary(empId) / 30;
-			int Holidays = (weeklyHolidayRepo.GetAllHolidays().Select(x => x.Holiday).Count()) * 4;
-			int absentDays = DateTime.DaysInMonth(year, month) - (Holidays + attendanceDays);
+			int Holidays = (weeklyHolidayRepo.GetAllHolidays().Select(x => x.Holiday).Count()) * 4 + (holidays2);
+			int absentDays = /*DateTime.DaysInMonth(year, month)*/ 30 - (Holidays + attendanceDays);
 
 			int overTimePricePerHour = generalSettingRepo.OverTimePricePerHour();
 			int discountTimePricePerHour = generalSettingRepo.DiscountTimePricePerHour();

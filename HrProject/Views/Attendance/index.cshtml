@@ -3,7 +3,9 @@
 @{
     ViewData["Title"] = "index";
     Layout = "_TestLayout";
-    AttendanceViewModel attendance = new AttendanceViewModel();
+    var attendance = new AttendanceViewModel();
+    SelectList empList = new SelectList(ViewBag.Employees, "Id", "FirstName");
+    SelectList departList = new SelectList(ViewBag.DeptList, "Id", "DeptName");
 }
 
 @if (TempData["AlertMessage"] != null)
@@ -15,14 +17,51 @@
     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Form/</span> Attendance</h4>
     <hr />
 
+    <form id="searchForm" class="form form-horizontal" asp-action="SearchByEmpName" asp-asp-controller="Salary" onsubmit="return validateDate()">
+        <div class="form-body">
+            <div class="form-group row">
+                <label class="col-md-3 label-control text-black" for="projectinput7">Employee </label>
+                <div class="col-md-9">
+                    <select name="empId" asp-items="empList" class="form-control" >
+                        <option value="">--- Select Employee ---</option>
+                    </select>
+                </div>
+                <label class="col-md-3 label-control text-black mt-1" for="projectinput7">Department </label>
+                <div class="col-md-9 mt-1">
+                    <select name="deptId" asp-items="departList" class="form-control">
+                        <option value="">--- Select Department ---</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="form-group row mt-2">
+                <label class="col-md-3 label-control text-black" for="projectinput9">Date </label>
+                <div class="col-md-9">
+                    <div class="position-relative has-icon-right">
+                        <input type="month" class="form-control" name="targetDate" id="targetDate">
+                        <div class="form-control-position">
+                            <i class="ft-message-square"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions mt-3 mb-3 float-end">
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-search"></i> Search
+            </button>
+        </div>
+    </form>
+
     <table id="employees" class="table table-striped table-bordered dt-responsive nowrap" style="color: black; margin-top: 15px">
         <thead>
             <tr class="fw-bold">
                 <th>Name</th>
+                <th>Department</th>
                 <th>Date</th>
                 <th>Arrival Time</th>
                 <th>Leave Time</th>
-                <th>Action</th>
+                <th class="text-center">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +69,7 @@
             {
                 <tr>
                     <td>@item.Employee.FirstName</td>
+                    <td>@item.Employee.Department.DeptName</td>
                     <td>@item.Date.ToString("yyyy-MM-dd")</td>
                     <td>@item.ArrivalTime?.ToString("hh:mm:ss tt")</td>
                     <td>@item.DepartureTime?.ToString("hh:mm:ss tt")</td>
