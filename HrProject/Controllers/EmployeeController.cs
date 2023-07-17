@@ -19,9 +19,9 @@ namespace HrProject.Controllers
         public EmployeeController(IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository)
         {
             _employeeRepository = employeeRepository;
-            _departmentRepository = departmentRepository;   
+            _departmentRepository = departmentRepository;
         }
-        // GET: EmployeeController
+
         [Authorize(Permissions.Employee.View)]
         public ActionResult Index()
         {
@@ -36,16 +36,14 @@ namespace HrProject.Controllers
             return View(employees);
         }
 
-		// GET: EmployeeController/Details/5
-		[Authorize(Permissions.Employee.View)]
-		public ActionResult Details(int id)
+
+        [Authorize(Permissions.Employee.View)]
+        public ActionResult Details(int id)
         {
             var emp = _employeeRepository.GetEmployeeById(id);
             return View(emp);
         }
 
-        // GET: EmployeeController/Create
-        //[Authorize(Permissions.Employee.Add)]
         [Authorize(Permissions.Employee.Add)]
         public ActionResult Create()
         {
@@ -55,16 +53,16 @@ namespace HrProject.Controllers
                 Text = x.DeptName,
                 Value = x.Id.ToString()
             });
-            ViewBag.Cities = new List<string> { "Cairo", "Alexandria", "Giza", "Tanta", "Damanhour", "Menoufia", "Mansoura", "Qena", "Luxor", "Aswan", "Other"};
+            ViewBag.Cities = new List<string> { "Cairo", "Alexandria", "Giza", "Tanta", "Damanhour", "Menoufia", "Mansoura", "Qena", "Luxor", "Aswan", "Other" };
 
             return View();
         }
 
-        // POST: EmployeeController/Create
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-		[Authorize(Permissions.Employee.Add)]
-		public ActionResult Create(IFormCollection collection)
+        [Authorize(Permissions.Employee.Add)]
+        public ActionResult Create(IFormCollection collection)
         {
             var newEmp = new Models.Employee
             {
@@ -77,18 +75,31 @@ namespace HrProject.Controllers
                 Nationality = collection.FirstOrDefault(x => x.Key == "Nationality").Value,
                 NationalId = collection.FirstOrDefault(x => x.Key == "NationalId").Value,
                 Salary = Convert.ToInt32(collection.FirstOrDefault(x => x.Key == "Salary").Value),
-                HireDate = Convert.ToDateTime(collection.FirstOrDefault(x => x.Key =="HireDate").Value),
-                BirthDate = Convert.ToDateTime(collection.FirstOrDefault(x => x.Key =="BirthDate").Value),
+                HireDate = Convert.ToDateTime(collection.FirstOrDefault(x => x.Key == "HireDate").Value),
+                BirthDate = Convert.ToDateTime(collection.FirstOrDefault(x => x.Key == "BirthDate").Value),
                 ArrivalTime = TimeSpan.Parse(collection.FirstOrDefault(x => x.Key == "ArrivalTime").Value),
                 LeaveTime = TimeSpan.Parse(collection.FirstOrDefault(x => x.Key == "LeaveTime").Value),
                 Departmentid = Convert.ToInt32(collection.FirstOrDefault(x => x.Key == "DepartmentList").Value),
             };
-            _employeeRepository.Insert(newEmp);
+
+            var flag = _employeeRepository.Insert(newEmp);
+            if (flag == false)
+            {
+                TempData["AlertMessage"] = "This National ID has already Registered Before.";
+                var departments = _departmentRepository.GetAllDepartments();
+                ViewBag.DepartmentList = departments.Select(x => new SelectListItem
+                {
+                    Text = x.DeptName,
+                    Value = x.Id.ToString()
+                });
+                ViewBag.Cities = new List<string> { "Cairo", "Alexandria", "Giza", "Tanta", "Damanhour", "Menoufia", "Mansoura", "Qena", "Luxor", "Aswan", "Other" };
+                return View();
+            }
 
             return RedirectToAction("Index");
         }
 
-        // GET: EmployeeController/Edit/5
+
         [Authorize(Permissions.Employee.Edit)]
         public ActionResult Edit(int id)
         {
@@ -100,7 +111,8 @@ namespace HrProject.Controllers
                 Value = x.Id.ToString(),
                 Selected = x.Id == emp.Departmentid
             });
-            var empVM = new EmployeeViewModel() {
+            var empVM = new EmployeeViewModel()
+            {
                 FirstName = emp.FirstName,
                 LastName = emp.LastName,
                 Country = emp.Country,
@@ -118,11 +130,11 @@ namespace HrProject.Controllers
             return View(empVM);
         }
 
-        // POST: EmployeeController/Edit/5
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-		[Authorize(Permissions.Employee.Edit)]
-		public ActionResult Edit(int id, IFormCollection collection)
+        [Authorize(Permissions.Employee.Edit)]
+        public ActionResult Edit(int id, IFormCollection collection)
         {
             var newEmp = new Models.Employee
             {
@@ -145,26 +157,9 @@ namespace HrProject.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: EmployeeController/Delete/5
-        //[Authorize(Permissions.Employee.Delete)]
-        //public ActionResult Delete(int id)
-        //{
-        //    var emp = _employeeRepository.GetEmployeeById(id);
-        //    var departments = _departmentRepository.GetAllDepartments();
-        //    ViewBag.DepartmentList = departments.Select(x => new SelectListItem
-        //    {
-        //        Text = x.DeptName,
-        //        Value = x.Id.ToString(),
-        //        Selected = x.Id == emp.Departmentid
-        //    });
-        //    return View(emp);
-        //}
 
-        // POST: EmployeeController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-		[Authorize(Permissions.Employee.Delete)]
-		public ActionResult Delete(int id)
+        [Authorize(Permissions.Employee.Delete)]
+        public ActionResult Delete(int id)
         {
             _employeeRepository.Delete(id);
             return RedirectToAction(nameof(Index));

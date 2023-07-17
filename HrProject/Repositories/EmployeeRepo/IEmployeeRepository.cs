@@ -7,7 +7,8 @@ namespace HrProject.Repositories.EmployeeRepo
         List<Employee> GetAllEmployees();
         Employee GetEmployeeById(int? id);
         List<Employee> GetEmployeeByName(string name);
-        void Insert(Employee employee);
+        bool Insert(Employee employee);
+        //void Insert(Employee employee);
         void Update(int id, Employee employee);
         void Delete(int id);
         Employee GetEmployeeByNationalId(int Id);

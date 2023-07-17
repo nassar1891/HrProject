@@ -361,3 +361,10 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Controllers/EmployeeController.cs
+/Controllers/SalaryController.cs
+/Repositories/AttendanceRepository/AttendanceRepositary.cs
+/Repositories/EmployeeRepo/EmployeeRepository.cs
+/Repositories/EmployeeRepo/IEmployeeRepository.cs
+/Views/Employee/Create.cshtml
+/Views/Group/AddGroup.cshtml

@@ -29,12 +29,25 @@ namespace HrProject.Repositories.EmployeeRepo
 				.ToList();
 		}
 
-		public void Insert(Employee employee)
-		{
-			context.Employees.Add(employee);
-			context.SaveChanges();
-		}
-		public void Update(int id, Employee employee)
+        //public void Insert(Employee employee)
+        //{
+        //	context.Employees.Add(employee);
+        //	context.SaveChanges();
+        //}
+
+        public bool Insert(Employee employee)
+        {
+            // Check if the national ID already exists
+            bool nationalIdExists = context.Employees.Any(e => e.NationalId == employee.NationalId);
+            if (nationalIdExists)
+            {
+                return false;
+            }
+            context.Employees.Add(employee);
+            context.SaveChanges();
+            return true;
+        }
+        public void Update(int id, Employee employee)
 		{
 			Employee existingEmployee = context.Employees.FirstOrDefault(e => e.Id == id);
 			if (existingEmployee != null)
